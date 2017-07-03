@@ -1,0 +1,533 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+    <title>新建装运单</title>
+    <link rel="stylesheet" href="css/bootstrap.css">
+    <!--[if lt IE 9]>
+    <script src="js/html5shiv.min.js"></script>
+    <script src="js/respond.min.js"></script>
+    <![endif]-->
+    <style>
+        body{
+            background: #F4F4F4;
+            background-size: cover;
+            font-family: 'Microsoft Yahei';
+        }
+        header{
+            background: #fff;
+            border-bottom:1px solid #c2c2c2;
+            -webkit-box-shadow:0 0.1rem 0.4rem #c2c2c2;
+            -moz-box-shadow:0 0.1rem 0.4rem #c2c2c2;
+            box-shadow:0 0.1rem 0.4rem #c2c2c2;
+        }
+        header .col-xs-6 span{
+            color:#000;
+            font-size:150%;
+            display:inline-block;
+            margin-top:8%;
+        }
+        header .col-xs-3 img{
+            width:4rem;
+            height:auto;
+        }
+        section .container>.row{
+            margin:3% 1%;
+        }
+        input{
+            border:0;
+            outline:0;
+        }
+        .container>.row .search_box .search_prod{
+            width:100%;
+            height:4rem;
+            font-size:1.8rem;
+            padding:3% 3%;
+            background: #fff;
+            color:#aaa;
+            border-radius: .4rem;
+            padding-left:40px;
+        }
+        .container .prod-list li{
+            width:100%;
+            height:25%;
+            background: #fff;
+            border:0;
+            border-radius: .5rem;
+            margin-bottom:3%;
+            border-bottom:1px solid #c2c2c2;
+            -webkit-box-shadow:0 0.1rem 0.2rem #c2c2c2;
+            -moz-box-shadow:0 0.1rem 0.2rem #c2c2c2;
+            box-shadow:0 0.1rem 0.2rem #c2c2c2;
+        }
+        .prod-list .prod_name{
+            font-size:130%;
+            font-weight:bold;
+        }
+        .prod-list .prod_num{
+            font-size:110%;
+            color:#6F6F6F;
+        }
+        .prod-list .cart_num{
+            border:1px solid #EEEEEE;
+            display:inline-block;
+            height:auto;
+        }
+        .prod-list .cart_num>div{
+            display:inline-block;
+            width:2.2rem;
+            height:2.2rem;
+            line-height:2.2rem;
+        }
+        .prod-list .cart_num .text-center{
+            display:inline-block;
+            width:4.8rem;
+            height:2.2rem;
+            border-left: 1px solid #eee;
+            border-right: 1px solid #eee;
+            font-weight:bold;
+            font-size: 130%;
+        }
+        #footer{
+            background: #fff;
+            width:100%;
+            padding:3%;
+            /*min-height: 14%;*/
+        }
+        #footer .prod_totle{
+            color:#6B6B6B;
+            font-size: 140%;
+        }
+        #footer .prod_totle span{
+            color:#000;
+            font-size: 140%;
+        }
+        #footer  .text-right input{
+            color:#fff;
+            background: #E20D0D;
+            width:80%;
+            height:40%;
+            border:0;
+            border-radius: .4rem;
+            font-size:130%;
+        }
+        #footer .circle_red{
+            width:5rem;
+            height:5rem;
+            line-height:4.6rem;
+            text-align: center;
+            -webkit-border-radius:2.5rem;
+            -moz-border-radius:2.5rem;
+            border-radius:2.5rem;
+            background: #E20D0D;
+            color:#fff;
+            font-size:4.6rem;
+            position:fixed;
+            right:8%;
+            bottom:13%;
+        }
+        section{
+            margin-top:16%;
+            margin-bottom:35%;
+        }
+    </style>
+</head>
+<body>
+    <header class="navbar navbar-fixed-top">
+        <div class="container">
+            <div class="row">
+                <div class="col-xs-3 ">
+                    <a href="myload_list.html" ><img src="images/arrow.jpg" alt="" class="img-responsive"></a>
+                </div>
+                <div class="col-xs-6 text-center">
+                    <span>新建装运单</span>
+                </div>
+            </div>
+        </div>
+    </header>
+    <section>
+        <div class="container">
+            <div class="row">
+                <div class="col-xs-12 search_box">
+                    <span class="glyphicon glyphicon-search form-control-feedback"></span>
+                    <input type="text" class="search_prod " name="search_box" placeholder="请输入产品搜索" >
+                </div>
+            </div>
+            <ul class="list-group list-unstyled prod-list">
+                <!--<li class="list-group-item" >-->
+                <!--<div class="row">-->
+                    <!--<div class="col-xs-3 img-ad" style="padding-right:0">-->
+                        <!--<img src="SFA_Image/sku_no.png" alt="" class="img-responsive  center-block">-->
+                    <!--</div>-->
+                    <!--<div class="col-xs-9">-->
+                        <!--<div class="row prod_name">-->
+                            <!--<div class="col-xs-12">产品名称-->
+                                <!--</div>-->
+                            <!--</div>-->
+                        <!--<div class="row prod_num">-->
+                            <!--<div class="col-xs-12">产品编号: <span>-->
+                <!--</span></div>-->
+                            <!--</div>-->
+                        <!--<div class="row">-->
+                            <!--<div class="col-xs-7 col-xs-offset-4 text-right">-->
+                                <!--<div class="cart_num text-center">-->
+                                    <!--<div class="jian_button"><img src="images/icon_jian.png" alt="" ></div>-->
+                                    <!--<div class="text-center">-->
+                                        <!--<input type="number" class="text-center prod_dan" value="0" max=1000>-->
+                                        <!--</div>'+-->
+                                    <!--<div class="jia_button"><img src="images/icon_jia.png" alt=""></div>-->
+                                    <!--</div>-->
+                                <!--</div>-->
+                            <!--</div>-->
+                        <!--</div>-->
+                    <!--</div>-->
+                <!--</li>-->
+            </ul>
+        </div>
+    </section>
+        <div class="navbar navbar-fixed-bottom" id="footer" >
+            <div class="circle_red">+</div>
+            <div>
+                <div class="col-xs-6  prod_totle">
+                    总箱数 <span class="Num_t">0</span>
+                </div>
+                <div class="col-xs-6 text-right">
+                    <input type="button" value="提交订单" class="btn submit_btn">
+                </div>
+            </div>
+        </div>
+
+<script src="js/jquery-1.11.3.js"></script>
+<script src="js/bootstrap.js"></script>
+<script>
+var localstorage = window.localStorage;
+//localstorage.removeItem("orderItemList1");
+var token=JSON.stringify(localstorage.getItem("token"));
+var driverNo=localstorage.getItem("driverNo");
+var driverName=localstorage.getItem("driverName");
+console.log(token);
+if(localstorage.getItem("orderItemList1")!=null && localstorage.getItem("orderItemList1")!=[]){
+    var str1="";
+var orderItemList1=JSON.parse(localstorage.getItem("orderItemList1"));
+    console.log(orderItemList1);
+   for(var k=0;k<orderItemList1.length;k++){
+       str1 += '<li class="list-group-item" >' +
+               '<div class="row">' +
+               '<div class="col-xs-3 img-ad" style="padding-right:0">' +
+               '<img src="SFA_Image/sku_' +orderItemList1[k].articleNo+
+               '.png" alt="" onerror="imgError(this)" class="img-responsive  center-block">' +
+               '</div>' +
+               '<div class="col-xs-9">' +
+               '<div class="row prod_name">' +
+               '<div class="col-xs-12">' + orderItemList1[k].articleName +
+               '</div>' +
+               '</div>' +
+               '<div class="row prod_num">' +
+               '<div class="col-xs-12">产品编号: <span>' + orderItemList1[k].articleNo +
+               '</span></div>' +
+               '</div>' +
+               '<div class="row">' +
+               '<div class="col-xs-7 col-xs-offset-4 text-right">' +
+               '<div class="cart_num text-center">' +
+               '<div class="jian_button"><img src="images/icon_jian.png" alt="" ></div>' +
+               '<div class="text-center">' +
+               '<input type="text" class="text-center prod_dan" value="' +
+               orderItemList1[k].cases +
+               '" maxlength="3" onkeyup="onlyNum(this)" onblur="returnK(this)">' +
+               '</div>' +
+               '<div class="jia_button"><img src="images/icon_jia.png" alt=""></div>' +
+               '</div>' +
+               '</div>' +
+               '</div>' +
+               '</div>' +
+               '</div>' +
+               '</li>';
+        }
+    $(".prod-list").html(str1);
+    if(localstorage.getItem("article")!=null){
+        var product=JSON.parse(localstorage.getItem("article"));
+        console.log(product);
+        localstorage.removeItem("article");
+        //添加条目
+        var add_article= '<li class="list-group-item" >'+
+                '<div class="row">'+
+                '<div class="col-xs-3 img-ad" style="padding-right:0">'+
+                '<img src="SFA_Image/sku_' +product.articleNo+
+//
+                '.png" alt="" onerror="imgError(this)" class="img-responsive  center-block">' +
+                '</div>'+
+                '<div class="col-xs-9">'+
+                '<div class="row prod_name">'+
+                '<div class="col-xs-12">'+product.articleName +
+                '</div>'+
+                '</div>'+
+                '<div class="row prod_num">'+
+                '<div class="col-xs-12">产品编号: <span>'+product.articleNo+
+                '</span></div>'+
+                '</div>'+
+                '<div class="row">'+
+                '<div class="col-xs-7 col-xs-offset-4 text-right">'+
+                '<div class="cart_num text-center">'+
+                '<div class="jian_button"><img src="images/icon_jian.png" alt="" ></div>'+
+                '<div class="text-center">'+
+                '<input type="text" class="text-center prod_dan" value="0" maxlength="3" onkeyup="onlyNum(this)" onblur="returnK(this)">'+
+                '</div>'+
+                '<div class="jia_button"><img src="images/icon_jia.png" alt=""></div>'+
+                '</div>'+
+                '</div>'+
+                '</div>'+
+                '</div>'+
+                '</div>'+
+                '</li>';
+        console.log(add_article);
+        $(".prod-list").append(add_article);
+
+    };
+
+}else{
+    $.ajax({
+        url: "order/getFSVProducts",
+        type: "get",
+        async:false,
+        dataType: "json",
+//        data:{"token":token},
+        beforeSend: function (XMLHttpRequest) {
+            XMLHttpRequest.setRequestHeader("X-Access-Token", token);
+        },
+        success: function (data) {
+            console.log(data);
+            var str="";
+            if (data.status == 200) {
+                for (var i = 0; i < data.articleList.length; i++) {
+                    console.log(data.articleList[i].articleNo);
+                    str += '<li class="list-group-item" >' +
+                            '<div class="row">' +
+                            '<div class="col-xs-3 img-ad" style="padding-right:0">' +
+                            '<img src="SFA_Image/sku_' +data.articleList[i].articleNo+
+                            '.png" alt="" onerror="imgError(this)" class="img-responsive  center-block">' +
+                            '</div>' +
+                            '<div class="col-xs-9">' +
+                            '<div class="row prod_name">' +
+                            '<div class="col-xs-12">' + data.articleList[i].articleName +
+                            '</div>' +
+                            '</div>' +
+                            '<div class="row prod_num">' +
+                            '<div class="col-xs-12">产品编号: <span>' + data.articleList[i].articleNo +
+                            '</span></div>' +
+                            '</div>' +
+                            '<div class="row">' +
+                            '<div class="col-xs-7 col-xs-offset-4 text-right">' +
+                            '<div class="cart_num text-center">' +
+                            '<div class="jian_button"><img src="images/icon_jian.png" alt="" ></div>' +
+                            '<div class="text-center">' +
+                            '<input type="text" class="text-center prod_dan" value="0" maxlength="3" onkeyup="onlyNum(this)" onblur="returnK(this)">' +
+                            '</div>' +
+                            '<div class="jia_button"><img src="images/icon_jia.png" alt=""></div>' +
+                            '</div>' +
+                            '</div>' +
+                            '</div>' +
+                            '</div>' +
+                            '</div>' +
+                            '</li>';
+                }
+                $(".prod-list").html(str);
+            }else{
+                diolog_msg(data.message)
+            }
+        },
+        err: function () {
+            diolog_msg("网络不可用");
+        }
+    });
+};
+
+function onlyNum(that){
+    that.value=that.value.replace(/\D/g,"");
+}
+function returnK(that){
+    console.log(that.value);
+    if(that.value==""){
+        that.value=0;
+    }
+}
+function setTotle() {
+    var s = 0;
+    $("li").each(function () {
+        s += parseInt($(this).find(".prod_dan").val());
+    });
+    console.log("test"+s);
+    $(".Num_t").html(s);
+}
+setTotle();
+$(".prod_dan").bind("input propertychange",function(){
+    setTotle();
+});
+$(function(){
+    $(".cart_num .jia_button").on("click",function () {
+        var cart_num = parseInt($(this).prev().children().val());
+        $(this).prev().children().val(++cart_num);
+        setTotle();
+    });
+
+    $(".cart_num .jian_button").on("click",function () {
+        var cart_num = parseInt($(this).next().children().val());
+        cart_num > 0 && $(this).next().children().val(--cart_num);
+        setTotle();
+    });
+});
+function newGuid(){
+    var guid = "";
+    for (var i = 1; i <= 32; i++){
+        var n = Math.floor(Math.random()*16.0).toString(16);
+        guid +=   n;
+        if((i==8)||(i==12)||(i==16)||(i==20))
+            guid += "-";
+    }
+    return guid;
+}
+
+//添加产品
+$(".circle_red").click(function () {
+    var orderItemList1=[];
+    $("li").each(function(){
+        var cases=$(this).find(".prod_dan").val();
+        var tranCodeSRC=newGuid().toUpperCase();
+        var itemNo=parseInt($(this).index()+1);
+        var articleNo=$(this).find(".prod_num span").html();
+        var articleName=$(this).find(".prod_name .col-xs-12").html();
+        var orderItem1={
+            "tranCodeSRC":tranCodeSRC,
+            "itemNo":itemNo,
+            "articleNo": articleNo,
+            "cases": cases,
+            "articleName":articleName,
+            "pieces":0,
+            "articlePrice":0,
+            "articlePriceAmount":0,
+            "defectiveReasonCode":""
+        };
+        orderItemList1.push(orderItem1);
+
+    });
+    localstorage.setItem("orderItemList1",JSON.stringify(orderItemList1));
+    console.log(localstorage.getItem("orderItemList1"));
+    window.location="add_product.html";
+});
+//提交功能
+var submitOrderList=[];
+var submitOrderListItem={};
+    $(".submit_btn").click(function () {
+        var Guid = newGuid();
+//提交list订单数组
+        var orderItemList = [];
+        $("li").each(function (){
+            var cases = $(this).find(".prod_dan").val();
+            var tranCodeSRC = Guid.toUpperCase();
+            var itemNo = parseInt($(this).index() + 1);
+            var articleNo = $(this).find(".prod_num span").html();
+            var articleName = $(this).find(".prod_name .col-xs-12").html();
+            var orderItem = {
+                "tranCodeSRC": tranCodeSRC,
+                "itemNo": itemNo,
+                "articleNo": articleNo,
+                "cases": cases,
+                "pieces": 0,
+                "articlePrice": 0,
+                "articlePriceAmount": 0,
+                "defectiveReasonCode": ""
+            };
+            if(cases>0){
+                orderItemList.push(orderItem);
+            }
+        });
+        localstorage.setItem("orderItemList", orderItemList);
+        //创建时间以及格式
+        var TodayDate = new Date();
+        var thisYear = TodayDate.getFullYear();
+        var thisMon;
+        if (TodayDate.getMonth() + 1 < 10) {
+            thisMon = "0" + (TodayDate.getMonth() + 1);
+        } else {
+            thisMon = TodayDate.getMonth() + 1;
+        }
+        var thisDate;
+        if (TodayDate.getDate() < 10) {
+            thisDate = "0" + TodayDate.getDate();
+        } else {
+            thisDate = TodayDate.getDate();
+        }
+        var startDate = thisYear + "-" + thisMon + "-" + thisDate;
+        console.log(startDate);
+        //创建trancode
+        var orderTranCodeSrc = Guid.toUpperCase();
+        var src_date = {};
+        src_date.orderTranCodeSrc = orderTranCodeSrc;
+        src_date.startDate = startDate;
+        localstorage.setItem("src_date", JSON.stringify(src_date));
+        if(localstorage.getItem("submitOrderList")!=null){
+            submitOrderList=JSON.parse(localstorage.getItem("submitOrderList"));
+        }
+        submitOrderListItem={
+            "tranCodeSRC": orderTranCodeSrc,
+            "orderItemList": orderItemList
+        };
+        submitOrderList.push(submitOrderListItem);
+        localstorage.setItem("submitOrderList",JSON.stringify(submitOrderList));
+        $.ajax({
+            url: "order/submitOrder",
+            type: "post",
+            dataType: "json",
+            data: {
+                "tranCodeSRC": orderTranCodeSrc,
+                "orderItemList": JSON.stringify(orderItemList)
+            },
+            success: function (data) {
+                if (data.status == 200) {
+                    localstorage.removeItem("productList1");
+                    diolog_msg(data.message);
+                    window.location.href = "myload_list.html";
+                } else {
+                    diolog_msg(data.message);
+                }
+            },
+            err: function () {
+                diolog_msg("网络不可用");
+            }
+        })
+    });
+function nameFillter() {
+    //在现有的列表基础上找到内容 有的话就显示 没有的话就隐藏
+    var name_filter_list=$(".prod_num span");
+    name_filter_list.map(function() {
+        if($(this).html().indexOf($("input.search_prod").val())!==-1){
+//                $(this).parent().parent().parent().parent().parent().addClass("active1").show();
+            $(this).parent().parent().next().find("input[type='text']").focus();
+            $this=$(this).parent().parent().parent().parent().parent();
+            var navH = $this.offset().top;
+            console.log(navH);//获取该产品离顶部距离；
+//            $this.parent().animate({scrollTop:0},1500);
+//            $this.animate({scrollTop:0},1500);
+        }else{
+//           $(this).parent().parent().parent().parent().parent().removeClass("active1").hide();
+        }
+    });
+}
+
+//动态监听输入改变不用触发
+//$('input.search_prod').bind('input propertychange', function() {
+//    nameFillter()
+//});
+//值改变还要触发
+$("input.search_prod").change(function(){
+    nameFillter()
+});
+function imgError(that){
+    console.log("test");
+    that.src="images/sku_no.png";
+}
+
+</script>
+</body>
+</html>

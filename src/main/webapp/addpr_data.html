@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+    <title>补货数据</title>
+    <link rel="stylesheet" href="css/bootstrap.css">
+    <!--[if lt IE 9]>
+    <script src="js/html5shiv.min.js"></script>
+    <script src="js/respond.min.js"></script>
+    <![endif]-->
+    <style>
+        body{
+            background: #F4F4F4;
+            background-size: cover;
+            font-family: 'Microsoft Yahei';
+        }
+        header{
+            background: #fff;
+            border-bottom:1px solid #c2c2c2;
+            -webkit-box-shadow:0 0.1rem 0.4rem #c2c2c2;
+            -moz-box-shadow:0 0.1rem 0.4rem #c2c2c2;
+            box-shadow:0 0.1rem 0.4rem #c2c2c2;
+        }
+        header .col-xs-6 span{
+            color:#000;
+            font-size:150%;
+            display:inline-block;
+            margin-top:8%;
+        }
+        header .col-xs-3 img{
+            width:4rem;
+            height:auto;
+        }
+        a,a:visited,a:active{
+            text-decoration:none;
+            outline: none;
+            color: #fff;
+        }
+        input,input:focus{
+            outline:0;
+            border:0;
+        }
+        section{
+            color:#999;
+            font-size: 120%;
+            padding-bottom:20%;
+            margin-bottom:35%;
+        }
+        section .header_aside{
+            color:#fff;
+        }
+        section .container{
+            margin-top:3%;
+        }
+        #chose_type{
+            background: #FF9595;
+        }
+        #recept_data{
+            background: #FF9595;
+        }
+        #addp_data{
+            background: #E20D0D;
+        }
+        .header_box div.text_box{
+            height:100%;
+            text-align:center;
+            line-height:3.8rem;
+        }
+        .header_aside .col-xs-4{
+            padding-left: 0;
+            padding-right: 0;
+        }
+        .container .addprod-list li{
+            height:auto;
+            background: #fff;
+            border:0;
+            border-radius: .5rem;
+            margin-top:3%;
+            border-bottom:1px solid #c2c2c2;
+            -webkit-box-shadow:0 0.1rem 0.2rem #c2c2c2;
+            -moz-box-shadow:0 0.1rem 0.2rem #c2c2c2;
+            box-shadow:0 0.1rem 0.2rem #c2c2c2;
+            color:#000;
+            font-size:100%;
+        }
+        .addprod-list li .img-ad img{
+            max-width:60%;
+        }
+        .addprod-list .prod_name {
+            width:70%;
+            font-size:110%;
+            font-weight:bold;
+        }
+        .addprod-list .prod_id {
+            width:20%;
+            font-size:100%;
+            color:#5b5b5b;
+        }
+        .addprod-list .prod_price{
+            font-size:100%;
+            color:#e20d0d;
+        }
+        .addprod-list>.list-group-item>.row:first-child{
+            padding-bottom:3%;
+            margin-bottom: 3%;
+            border-bottom: 1px solid #f5f5f5;
+        }
+        .addprod-list>.list-group-item>.row>.col-xs-10>div{
+            margin-bottom:3%;
+        }
+        .addprod-list .cart_nums{
+            font-size:72%;
+            color:#999;
+        }
+        .addprod-list div.pull-left>span{
+            display:inline-block;
+            width:28%;
+        }
+        .addprod-list .cart_num{
+            width:66%;
+            border:1px solid #999;
+            display:inline-block;
+            /*height:auto;*/
+        }
+        .cart_nums .cart_num>input{
+            display:inline-block;
+            width:40%;
+            padding:2%;
+            color:#000;
+            text-align:center;
+            border-left: 1px solid #eee;
+            border-right: 1px solid #eee;
+        }
+        .cart_nums .cart_num>.jia_button, .cart_nums .cart_num>.jian_button{
+            width:22%;
+            border:0;
+            outline:0;
+            background: #fff;
+            font-size: 80%;
+            padding:2% 3%;
+        }
+        .cart_nums .cart_num img{
+           margin-top:1px;
+        }
+        #footer{
+            background: #fff;
+            width:100%;
+            padding:3%;
+            color:#5b5b5b;
+            font-size:110%;
+        }
+        #footer  .text-right input{
+            color:#fff;
+            background: #E20D0D;
+            width:80%;
+            height:40%;
+            border:0;
+            border-radius: .4rem;
+            font-size:130%;
+        }
+        #footer  .text-center{
+            margin-top:3%;
+        }
+        #footer .addp_num{
+            color:#000;
+            font-weight:bold;
+        }
+        #footer .addp_totle{
+            color:#e20d0d;
+            font-weight:bold;
+        }
+        .mask_layer{
+            position:absolute;
+            top:0;
+            left:0;
+            width:100%;
+            height:100%;
+            z-index:100;
+            display:none;
+            /*filter:alpha(opacity=0);*/
+            background: #000;
+            filter: alpha(opacity=50); /* IE的透明度 */
+            opacity: 0.5;  /* 透明度 */
+        }
+        #footer .circle_red{
+            width:5rem;
+            height:5rem;
+            line-height:4.6rem;
+            text-align: center;
+            -webkit-border-radius:2.5rem;
+            -moz-border-radius:2.5rem;
+            border-radius:2.5rem;
+            background: #E20D0D;
+            color:#fff;
+            font-size:4.6rem;
+            position:fixed;
+            right:8%;
+            bottom:13%;
+        }
+        #myModal{
+            background-color: rgba(255,255,255,1);
+            height:220px;
+            width: 80%;
+            margin-left: 10%;
+            position: fixed;
+            top: 30%;
+            right: 0;
+            bottom: 0;
+            left: 0;
+            z-index: 1050;
+            display: none;
+            overflow: hidden;
+            -webkit-overflow-scrolling: touch;
+            outline: 0;
+            color:#000;
+        }
+        #myModal .modal-header{
+            font-size:120%;
+        }
+        /*.modal-dialog{*/
+            /*width: 70%;*/
+            /*position:absolute;*/
+            /*top: 15%;*/
+            /*left: 12%;*/
+        /*}*/
+        /*label.col-xs-4,label.col-xs-3{*/
+            /*font-weight: normal;*/
+            /*padding-top: 3%;*/
+            /*padding-right: 0;*/
+        /*}*/
+        /*.form-horizontal {*/
+            /*margin-top: 10%;*/
+            /*!*font-size: 10%;*!*/
+        /*}*/
+        /*.form-group .col-xs-8{*/
+            /*padding-left: 0;*/
+        /*}*/
+        /*.form-group .col-xs-8 input{*/
+            /*border-radius: 0;*/
+            /*box-shadow: none;*/
+            /*-o-box-shadow: none;*/
+            /*-webkit-box-shadow: none;*/
+            /*-moz-shadow: none;*/
+        /*}*/
+        /*.form-group .btn{*/
+            /*background-color: #ffffff;*/
+            /*border: 1px solid #d4d4d4;*/
+            /*border-radius: 0;*/
+            /*box-shadow: none;*/
+            /*-o-box-shadow: none;*/
+            /*-webkit-box-shadow: none;*/
+            /*-moz-shadow: none;*/
+            /*padding: 5% 0 7% 0;*/
+            /*width: 27%;*/
+        /*}*/
+        /*#number {*/
+            /*border-bottom: 1px solid #d4d4d4;*/
+            /*border-top: 1px solid #d4d4d4;*/
+            /*width: 40%;*/
+            /*text-align: center;*/
+            /*font-size: 110%;*/
+            /*padding-top: 5%;*/
+            /*padding-bottom: 5%;*/
+        /*}*/
+        /*input {*/
+            /*outline: none;*/
+            /*-webkit-appearance: none; !*去除系统默认的样式*!*/
+            /*-webkit-tap-highlight-color: rgba(0, 0, 0, 0); !* 点击高亮的颜色*!*/
+        /*}*/
+        /*.form-horizontal>.btn{*/
+            /*background-color: #FFA735;*/
+            /*color: #ffffff;*/
+            /*border-radius: 0;*/
+            /*box-shadow: none;*/
+            /*-o-box-shadow: none;*/
+            /*-webkit-box-shadow: none;*/
+            /*-moz-shadow: none;*/
+            /*margin-top: 10%;*/
+        /*}*/
+        /*#msg1{*/
+            /*color: #ff0000;*/
+            /*margin-left: 3%;*/
+        /*}*/
+
+    </style>
+</head>
+<body>
+<header class="navbar navbar-fixed-top">
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-3">
+                <a href="#" onclick="javascript:history.go(-1)"><img src="images/arrow.jpg" alt="" class="img-responsive"></a>
+            </div>
+            <div class="col-xs-6 text-center">
+                <span>补货数据</span>
+            </div>
+            <div class="col-xs-3 text-right">
+                <a href="#" class="fresh"><img src="images/icon_refresh.png" alt="刷新" style="margin-top:8%"></a>
+            </div>
+        </div>
+    </div>
+</header>
+<section>
+    <div class="mask_layer"></div>
+    <div class="container">
+        <div class="row header_aside">
+            <div id="chose_type" class="col-xs-4 header_box" >
+                <a href="choose_type.html"><div class="text_box">1.选择类型</div></a>
+                <!--<div class="triangle"></div>-->
+            </div>
+            <div id="recept_data" class="col-xs-4 header_box" >
+                <a href="recept_data.html"><div class="text_box">2.收款数据</div></a>
+                <!--<div class="triangle"></div>-->
+            </div>
+            <div id="addp_data" class="col-xs-4 header_box" >
+                <a href="#"><div class="text_box">3.补货数据</div></a>
+                <!--<div class="triangle"></div>-->
+            </div>
+        </div>
+        <ul class="list-group list-unstyled addprod-list">
+            <!--<li class="list-group-item" >-->
+                <!--<div class="row" >-->
+                    <!--<div class="col-xs-3 img-ad text-center">-->
+                        <!--<img src="images/pic_01.png" alt="" class="img-responsive center-block">-->
+                    <!--</div>-->
+                    <!--<div class="col-xs-9">-->
+                        <!--<div class="clearfix">-->
+                            <!--<div class="pull-left prod_name">可口可乐易拉罐330ml</div>-->
+                            <!--<div class="pull-right prod_id">2315</div>-->
+                        <!--</div>-->
+                        <!--<div class="prod_price">-->
+                            <!--<div >￥<span>8.00</span></div>-->
+                        <!--</div>-->
+                    <!--</div>-->
+                <!--</div>-->
+                <!--<div class="cart_nums clearfix">-->
+                    <!--<div class="pull-left" style="width:33.2%">-->
+                        <!--<span>销售</span>-->
+                        <!--<div class="cart_num">-->
+                            <!--<button class="jian_button"><img src="images/icon_jian.png" alt="" class="img-responsive"></button>-->
+                            <!--&lt;!&ndash;<div class="text-center">&ndash;&gt;-->
+                            <!--<input type="number" class="text-center prod_dan" value="0" max="99" min="0">-->
+                            <!--&lt;!&ndash;</div>&ndash;&gt;-->
+                            <!--<button class="jia_button"><img src="images/icon_jia.png" alt="" class="img-responsive"></button>-->
+                        <!--</div>-->
+                    <!--</div>-->
+                    <!--<div class="pull-left" style="width:33.2%">-->
+                        <!--<span>补货</span>-->
+                        <!--<div class="cart_num">-->
+                            <!--<button class="jian_button"><img src="images/icon_jian.png" alt="" class="img-responsive"></button>-->
+                            <!--&lt;!&ndash;<div class="text-center">&ndash;&gt;-->
+                            <!--<input type="number" class="text-center prod_dan  refillNum" value="0" max="99" min="0">-->
+                            <!--&lt;!&ndash;</div>&ndash;&gt;-->
+                            <!--<button class="jia_button"><img src="images/icon_jia.png" alt="" class="img-responsive"></button>-->
+                        <!--</div>-->
+                    <!--</div>-->
+                    <!--<div class="pull-left" style="width:33.2%">-->
+                        <!--<span>回收</span>-->
+                        <!--<div class="cart_num">-->
+                            <!--<button class="jian_button"><img src="images/icon_jian.png" alt="" class="img-responsive"></button>-->
+                            <!--&lt;!&ndash;<div class="text-center">&ndash;&gt;-->
+                            <!--<input type="number" class="text-center prod_dan" value="0" max="99" min="0">-->
+                            <!--&lt;!&ndash;</div>&ndash;&gt;-->
+                            <!--<button class="jia_button"><img src="images/icon_jia.png" alt="" class="img-responsive"></button>-->
+                        <!--</div>-->
+                    <!--</div>-->
+
+                <!--</div>-->
+            <!--</li>-->
+        </ul>
+
+    </div>
+    <!--添加产品 模态框-->
+    <div class="modal fade" role="dialog" id="myModal">
+        <div class="modal-dialog">
+            <div class="model-content">
+                <form class="form-horizontal">
+                    <div class="modal-header text-center">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                            <span class="sr-only">Close</span>
+                        </button>
+                        <h4>添加产品内容</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row">
+                            <label class="col-md-3 col-sm-4 col-xs-4 control-label" for="identifier1">产品编号</label>
+                            <div class="col-md-9 col-sm-8 col-xs-8">
+                                <input class="form-control" id="identifier1" name="htmer" type="number" tabindex="1">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div id="msg1"></div>
+                        </div>
+                    </div>
+
+                    <div class="modal-footer">
+                        <button class="btn btn-danger btn-large addProduct" type="button">确认添加</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+<div class="navbar navbar-fixed-bottom" id="footer" >
+    <div class="circle_red" data-toggle="modal">+</div>
+    <div class="row">
+        <div class="col-xs-4 text-center" style="padding-right:0">
+            补货总数 <span class="addp_num">0</span>
+        </div>
+        <div class="col-xs-4 text-center" style="padding-right:0">
+           总价<span class="addp_totle">￥0</span>
+        </div>
+        <div class="col-xs-4 text-right">
+            <input type="button" value="提交" class="btn text-center submit_order">
+        </div>
+    </div>
+</div>
+
+<script src="js/jquery-1.11.3.js"></script>
+<script src="js/bootstrap.js"></script>
+<script src="js/addpr_data.js"></script>
+</body>
+</html>

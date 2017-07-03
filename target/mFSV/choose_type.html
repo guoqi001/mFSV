@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+    <title>选择类型</title>
+    <link rel="stylesheet" href="css/bootstrap.css">
+    <!--[if lt IE 9]>
+    <script src="js/html5shiv.min.js"></script>
+    <script src="js/respond.min.js"></script>
+    <![endif]-->
+    <style>
+        body{
+            background: #F4F4F4;
+            background-size: cover;
+            font-family: 'Microsoft Yahei';
+        }
+        header{
+            background: #fff;
+            border-bottom:1px solid #c2c2c2;
+            -webkit-box-shadow:0 0.1rem 0.4rem #c2c2c2;
+            -moz-box-shadow:0 0.1rem 0.4rem #c2c2c2;
+            box-shadow:0 0.1rem 0.4rem #c2c2c2;
+        }
+        a,a:visited,a:active{
+            text-decoration:none;
+            outline: none;
+            color: #fff;
+        }
+        header .col-xs-6 span{
+            color:#000;
+            font-size:150%;
+            display:inline-block;
+            margin-top:8%;
+        }
+        header .col-xs-3 img{
+            width:4rem;
+            height:auto;
+        }
+        header .header_aside{
+            width:100%;
+            height:100%;
+            font-size:120%;
+            color:#fff;
+        }
+        input,input:focus{
+            outline:0;
+            border:0;
+        }
+        section{
+            color:#999;
+            font-size: 120%;
+            margin-bottom:35%;
+        }
+        section .header_aside{
+            color:#fff;
+        }
+        section .container{
+            margin-top:3%;
+        }
+        #chose_type{
+            background: #E20D0D;
+        }
+        #recept_data{
+            background: #FF9595;
+        }
+        #addp_data{
+            background: #FF9595;
+        }
+        .header_box div.text_box{
+            height:100%;
+            text-align:center;
+            line-height:3.8rem;
+        }
+        .header_aside .col-xs-4{
+            padding-left: 0;
+            padding-right: 0;
+        }
+        .container .type-list li,.container .table-list li{
+            width:100%;
+            height:auto;
+            background: #fff;
+            border:0;
+            border-radius: .5rem;
+            margin-top:3%;
+            border-bottom:1px solid #c2c2c2;
+            -webkit-box-shadow:0 0.1rem 0.2rem #c2c2c2;
+            -moz-box-shadow:0 0.1rem 0.2rem #c2c2c2;
+            box-shadow:0 0.1rem 0.2rem #c2c2c2;
+            color:#000;
+            font-size:108%;
+        }
+        .type-list .col-xs-8{
+            padding-top:1%;
+        }
+        .type-list .col-xs-2 img{
+            vertical-align: middle;
+        }
+        .table-list .col-xs-5 input{
+            display:inline-block;
+            max-width:80%;
+            font-size:1.6rem;
+            color:#aaa;
+        }
+        #footer{
+            background: #fff;
+            width:100%;
+            padding:3%;
+        }
+        #footer  .text-right input{
+            color:#fff;
+            background: #E20D0D;
+            width:80%;
+            height:40%;
+            border:0;
+            border-radius: .4rem;
+            font-size:130%;
+        }
+        .mask_layer{
+            position:absolute;
+            top:0;
+            left:0;
+            width:100%;
+            height:100%;
+            z-index:100;
+            display:none;
+            /*filter:alpha(opacity=0);*/
+            background: #000;
+            filter: alpha(opacity=50); /* IE的透明度 */
+            opacity: 0.5;  /* 透明度 */
+        }
+    </style>
+</head>
+<body>
+<header class="navbar navbar-fixed-top">
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-3">
+                <a href="customer_list.html"><img src="images/arrow.jpg" alt="" class="img-responsive"></a>
+            </div>
+            <div class="col-xs-6 text-center">
+                <span>选择类型</span>
+            </div>
+        </div>
+    </div>
+</header>
+<section>
+<div class="mask_layer"></div>
+    <div class="container">
+        <div class="row header_aside">
+            <div id="chose_type" class="col-xs-4 header_box" >
+                <a href=""><div class="text_box">1.选择类型</div></a>
+                <!--<div class="triangle"></div>-->
+            </div>
+            <div id="recept_data" class="col-xs-4 header_box" >
+                <a href="recept_data.html"><div class="text_box">2.收款数据</div></a>
+                <!--<div class="triangle"></div>-->
+            </div>
+            <div id="addp_data" class="col-xs-4 header_box" >
+                <a href=""><div class="text_box">3.补货数据</div></a>
+                <!--<div class="triangle"></div>-->
+            </div>
+        </div>
+        <div>选择类型</div>
+        <ul class="list-group list-unstyled type-list">
+            <li class="list-group-item" >
+                <div class="row">
+                    <div class="col-xs-8">销售补货</div>
+                    <div class="col-xs-2 col-xs-offset-2" ><img src="images/checkbox_sel.png" alt="select" class="img-responsive active"></div>
+                </div>
+            </li>
+            <li class="list-group-item" >
+                <div class="row">
+                    <div class="col-xs-8">初次填充</div>
+                    <div class="col-xs-2 col-xs-offset-2" ><img src="images/checkbox_nor.png" alt="select" class="img-responsive"></div>
+                </div>
+            </li>
+            <li class="list-group-item" >
+                <div class="row">
+                    <div class="col-xs-8">回收容器</div>
+                    <div class="col-xs-2 col-xs-offset-2" ><img src="images/checkbox_nor.png" alt="select" class="img-responsive"></div>
+                </div>
+            </li>
+        </ul>
+        <div>码表录入</div>
+        <ul class="list-group list-unstyled table-list">
+            <li class="list-group-item" >
+                <div class="row">
+                    <div class="col-xs-7" >码表数（必填）</div>
+                    <div class="col-xs-5" >
+                        <input type="text" placeholder="请输入" maxlength="7" onkeyup="this.value=this.value.replace(/\D/g,'')" class="size_no">
+                    </div>
+                </div>
+            </li>
+            <li class="list-group-item" >
+                <div class="row">
+                    <div class="col-xs-7">备用金</div>
+                    <div class="col-xs-5" >
+                        <input type="text" placeholder="请输入"  maxlength="7" class="pettycash" onkeyup="this.value=this.value.replace(/\D/g,'')">
+                    </div>
+                </div>
+            </li>
+        </ul>
+    </div>
+</section>
+<div class="navbar navbar-fixed-bottom" id="footer" >
+    <div class="row">
+        <div class="col-xs-6 col-xs-offset-6 text-right">
+            <input type="button" value="下一步" class="btn text-center next_step">
+        </div>
+    </div>
+</div>
+<script src="js/jquery-1.11.3.js"></script>
+<script src="js/bootstrap.js"></script>
+<script>
+    var localstorage=window.localStorage;
+    $(function() {
+        var headerH = $("header").height();
+        $("section").css("margin-top", headerH);
+    });
+
+    var shipmentCode=localstorage.getItem("shipmentCode");
+    var outletNo=localstorage.getItem("outletNo");
+    var  delive=localstorage.getItem("delive");
+    console.log(shipmentCode);
+    console.log(outletNo);
+    console.log(delive);
+    if(delive==1){
+        $(".mask_layer").css("display","block");
+    }else{
+        $(".mask_layer").css("display","none");
+    }
+    $(function(){
+        $.ajax({
+            url:"scheduling/getFSVsalesInfoFromCS",
+            type:"post",
+            dataType:"json",
+            data:{
+                "shipmentCode":shipmentCode,
+                "outletNo":outletNo
+            },
+            success:function(data){
+                console.log(data);
+                if(data.status==200){
+                        localstorage.setItem("articleList",data.articleList);//articleList产品列表
+                        var srcSel="images/checkbox_sel.png";
+                        var srcNor="images/checkbox_nor.png";
+                        $(".size_no").val(data.machineNum);
+                        $(".pettycash").val(data.fsvDeposit);
+                        $(".type-list li").eq(data.refillType).find(".img-responsive").attr("src",srcSel).addClass("active");
+                        $(".type-list li").eq(data.refillType).siblings().find(".img-responsive").attr("src",srcNor).removeClass("active");
+                        localstorage.setItem("type","CS");
+//                    }
+                }else if(data.status==202){
+//                    diolog_msg(data.message);
+                    localstorage.setItem("type","COLV");
+                }else{
+                    diolog_msg(data.message);
+                }
+            },
+            err:function(){
+                diolog_msg("网络不可用")
+            }
+        });
+        //手动修改类型
+        $(".type-list li").on("click",function(){
+            var srcSel="images/checkbox_sel.png";
+            var srcNor="images/checkbox_nor.png";
+
+            if($(this).find(".img-responsive").attr("src")==srcNor){
+                $(this).find(".img-responsive").attr("src",srcSel).addClass("active");
+                $(this).siblings().find(".img-responsive").attr("src",srcNor).removeClass("active");
+            }else{
+                $(this).find(".img-responsive").attr("src",srcNor);
+            }
+        });
+
+    });
+    //下一步 获取选择信息
+    $(".next_step").click(function(){
+        var size_no=$(".size_no").val();
+        if(size_no=="" || size_no==0){
+            console.log("1");
+          diolog_msg("请输入正确的码表数!")
+        }else{
+            var pettycash=0;
+            if($(".pettycash").val()!="" ){
+                pettycash=$(".pettycash").val();
+            }
+            localstorage.setItem("size_no",size_no);//码表数
+            localstorage.setItem("pettycash",pettycash);//备用金
+            if($(".active").parent().prev().html()=="销售补货"){
+                localstorage.setItem("refillType",0);
+            }else if( $(".active").parent().prev().html()=="初次填充"){
+                localstorage.setItem("refillType",1);
+            }else{
+                localstorage.setItem("refillType",2);
+            };
+            window.location.href="recept_data.html";
+
+        }
+    });
+
+
+
+//    $(function(){
+//        if( $(".active").prev().html()=="初次填充"){
+//            $(".pettycash").attr("min",0);
+//        }else if($(".active").prev().html()=="回收容器"){
+//            $(".pettycash").attr("max",0);
+//        }else{
+//            $(".pettycash").removeAttr("max");
+//        }
+//    });
+//
+
+</script>
+</body>
+</html>

@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+    <title>重置密码</title>
+    <link rel="stylesheet" href="css/bootstrap.css">
+    <!--[if lt IE 9]>
+    <script src="js/html5shiv.min.js"></script>
+    <script src="js/respond.min.js"></script>
+    <![endif]-->
+    <style>
+        body{
+            /*background:url("../images/login_bg.png") no-repeat;*/
+            background-size: cover;
+            font-family: 'Microsoft Yahei';
+            /*font-size:1rem;*/
+        }
+        .form_box{
+            font-size:120%;
+            color:#E42A2A;
+            /*opacity: .7;*/
+        }
+        #logo_pic{
+            margin-top:25%;
+            margin-bottom:18%;
+        }
+        #logo_pic img{
+            width:55%;
+            height:auto;
+        }
+        .row1,.row2{
+            background: transparent;
+            border-bottom:2px solid #F08E92;
+            margin:2% 7%;
+        }
+        .row3{
+            border:0;
+            background: transparent;
+            margin:5% 5% 5% 5%;
+        }
+        .row4{
+            background: transparent;
+            margin:2% 7%;
+        }
+        .row4 .col-xs-7{
+            border-bottom:2px solid #F08E92;
+        }
+        .col-xs-2 img, .row4 .pull-left img{
+            width:3.5rem;
+            height:3.5rem;
+            float:left;
+            margin-bottom:20%;
+        }
+        .col-xs-10>input{
+            background: transparent;
+            border: none;
+            width:100%;
+            padding-top: 5%;
+            padding-left:3%;
+            padding-bottom: 3%;
+        }
+        .iden-code .col-xs-7{padding-right:0;}
+        .iden-code .col-xs-7 .col-xs-10{
+            padding:0;
+            padding-left:15%;
+        }
+        .col-xs-7 .col-xs-5 input{
+            background: transparent;
+            border: none;
+            width:100%;
+            margin-top:2%;
+            padding-top: 5%;
+            padding-left:20%;
+            padding-bottom: 3%;
+        }
+        .row3 .col-xs-12 input{
+            width:100%;
+            height:4.0rem;
+            outline:none;
+            border:0;
+            background: #E20D0D;
+            border-radius:2.0rem;
+            padding:0;
+            color:#fff;
+            text-align:center;
+        }
+        input,button{
+            border:0;
+            outline:0;
+        }
+        input:focus,button:focus{
+            border:0;
+            outline:0;
+        }
+        .col-xs-3 input{
+            background:transparent;
+            color:#E84343;
+            font-size:90%;
+        }
+        .col-xs-5 .get_idencode{
+            background: transparent;
+            height:3.2rem;
+            width:8rem;
+            margin-top:11%;
+            margin-left:2%;
+            border:1px solid #E84343;
+            border-radius:6%;
+            font-size:60%;
+            color:#E84343;
+        }
+
+    </style>
+</head>
+<body>
+<div class="container form_box">
+    <div class="row text-center" id="logo_pic">
+        <a href="#" onclick="javascript:history.go(-1)"><img src="images/login_logo.png" alt=""></a>
+    </div>
+    <div class="row row1">
+        <div class="col-xs-2">
+            <img src="images/login_icon_phone.png" alt="" >
+        </div>
+        <div class="col-xs-10">
+            <input type="text" id="userName" placeholder="手机号" oninput="if(value.length>11)value=value.slice(0,11)" autofocus required autocomplete="off" >
+        </div>
+    </div>
+    <div class="row row4 iden-code">
+        <div class="col-xs-7 ">
+            <div class="col-xs-2" style="padding:0">
+                <img src="images/login_icon_phone.png" alt="" >
+            </div>
+            <div class="col-xs-10">
+                <input type="text" id="iden_code" placeholder="验证码" autofocus required autocomplete="off" maxlength="6">
+            </div>
+
+        </div>
+        <div class="col-xs-5">
+            <div class="iden-box">
+                <input type="button" class="get_idencode" value="获取动态验证码">
+            </div>
+        </div>
+    </div>
+    <div class="row row2">
+        <div class="col-xs-2">
+            <img src="images/login_icon_password.png" alt="">
+        </div>
+        <div class="col-xs-10">
+            <input type="password" class="userPwd userPwd1" placeholder="新密码" pattern="\w{6,12}" required autocomplete="off" >
+        </div>
+    </div>
+    <div class="row row2">
+        <div class="col-xs-2">
+            <img src="images/login_icon_password.png" alt="">
+        </div>
+        <div class="col-xs-10">
+            <input type="password" class="userPwd userPwd2" placeholder="重复密码" pattern="\w{6,12}" required autocomplete="off" >
+        </div>
+    </div>
+    <div class="row row3">
+        <div class="col-xs-12">
+            <input type="button" name="submit" value="重置密码" class="reset_pwd">
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xs-3 col-xs-offset-8 ">
+            <input type="button" class="btn return-login" value="返回登录" onclick="window.location.href='login.html'">
+        </div>
+    </div>
+    <div class="row bottom-content">
+        <div class="col-xs-8 col-xs-offset-2 text-center">
+            <span>v1.3.1</span>
+        </div>
+    </div>
+</div>
+
+<script src="js/jquery-1.11.3.js"></script>
+<script src="js/bootstrap.js"></script>
+<script>
+//    $("#userName").blur(function(){
+//        var phoneNum= $("#userName").val();
+//        console.log(phoneNum);
+//        if(phoneNum==""){
+//            diolog_msg("手机号不能为空");
+//        }else if(!(/^1[34579]\d{9}$/.test(phoneNum))){
+//            diolog_msg("手机号格式不正确");
+//        }
+//    });
+$(function(){
+    if(localStorage.getItem("userName")!=null){
+        $("#userName").val(localStorage.getItem("userName"));
+    }
+});
+    $("#userName").focus(function(){
+//        $(this).val("");
+        $(this).css("color","#000");
+    });
+    $("#iden_code,.userPwd").focus(function(){
+        $(this).css("color","#000");
+    });
+    $("#iden_code").blur(function(){
+        var iden_code=$("#iden_code").val();
+        if(iden_code==""){
+            $("#iden_code").attr("placeholder","请输验证码");
+        }else{
+            return true;
+        }
+         });
+    $(".get_idencode").click(function () {
+        var InterValObj; //timer变量，控制时间
+        var count = 60; //间隔函数，1秒执行
+        var curCount;//当前剩余秒数
+        function sendMessage() {
+            curCount = count;
+            //设置button效果，开始计时
+            $(".get_idencode").attr("disabled", "true").val(curCount + "s后重新获取");
+            InterValObj = window.setInterval(SetRemainTime, 1000); //启动计时器，1秒执行一次
+        }
+
+        //timer处理函数
+        function SetRemainTime() {
+            if (curCount == 0) {
+                window.clearInterval(InterValObj);//停止计时器
+                $(".get_idencode").removeAttr("disabled").val("重新发送验证码");//启用按钮
+            }
+            else {
+                curCount--;
+                $(".get_idencode").val(curCount + "s后重新获取");
+            }
+        }
+        var mobileNo=$("#userName").val();
+        //向后台发送处理数据
+        $.ajax({
+            type: "POST", //用POST方式传输
+            dataType: "json", //数据格式:JSON
+            url:"employee/getValidateCode", //目标地址
+            data: {"mobileNo": mobileNo,"sendTag":2},
+//                    error: function (XMLHttpRequest, textStatus, errorThrown) {
+//                    },
+            success: function (data) {
+                console.log(data);
+                if(data.status==200){
+                    sendMessage();
+                }
+                else{
+                    diolog_msg(data.messageText);
+                }
+            }
+        });
+    });
+    $(".reset_pwd").click(function(){
+        var mobileNo=$("#userName").val();
+        var validateCode=$("#iden_code").val();
+        var newPassword=$(".userPwd1").val();
+        var confrimNewPassword=$(".userPwd2").val();
+        console.log(mobileNo);
+        if(mobileNo==""){
+//            diolog_msg("手机号不能为空");
+            $("#userName").attr("placeholder","手机号不能为空")
+        }else if(!(/^1[345789]\d{9}$/.test(mobileNo))){
+//            diolog_msg("手机号格式不正确");
+            $("#userName").attr("placeholder","手机号格式不正确")
+        }else  if(validateCode==""){
+//            $("#iden_code").attr("placeholder","请输验证码");
+            diolog_msg("请输验证码");
+        }else  if(newPassword==""){
+//            $(".userPwd1").attr("placeholder","密码不能为空");
+            diolog_msg("请输密码");
+        }else if(confrimNewPassword==""){
+//            $(".userPwd2").attr("placeholder","密码不能为空");
+            diolog_msg("请输入确认密码");
+        }else if(newPassword!==confrimNewPassword){
+//           $(".userPwd2").val("").attr("placeholder","密码不一致");
+            diolog_msg("密码不一致");
+        }else{
+            $.ajax({
+                type: "POST", //用POST方式传输
+                dataType: "json", //数据格式:JSON
+                url:"employee/resetPasswordByValidateCode", //目标地址
+                data: {"mobileNo": mobileNo,"validateCode":validateCode,"newPassword":newPassword,"confrimNewPassword":confrimNewPassword},
+                success: function (data) {
+                    console.log(data);
+                    if(data.status==200){
+                        window.location.href="login.html";
+                    }
+                    else{
+                        diolog_msg(data.messageText);
+                    }
+                },
+                error:function () {
+                    diolog_msg("重置失败，请检查网络");
+                }
+            });
+        }
+
+    });
+
+//    $("#reset-pwd").click(function(){
+//        window.location.href="resetpwd.html";
+//    })
+</script>
+</body>
+</html>

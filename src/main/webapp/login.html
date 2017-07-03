@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+    <title>登录</title>
+    <link rel="stylesheet" href="css/bootstrap.css">
+    <link rel="stylesheet" href="styles/login.css">
+    <!--[if lt IE 9]>
+    <script src="js/html5shiv.min.js"></script>
+    <script src="js/respond.min.js"></script>
+    <![endif]-->
+</head>
+<body>
+    <div id="form-msg">
+        <div class="container login-box">
+            <div class="row text-center" id="logo_pic">
+                <img src="images/login_logo.png" alt="LOGO" class="img-responsive center-block">
+            </div>
+            <div class="row row1">
+                <div class="col-xs-2">
+                    <img src="images/login_icon_phone.png" alt="" >
+                </div>
+                <div class="col-xs-10">
+                    <input class="phoneNum" type="text" id="userName" placeholder="手机号" oninput="if(value.length>11)value=value.slice(0,11)" pattern="/^1[34578]\d{9}$/;" >
+                </div>
+            </div>
+            <div class="row row2">
+                <div class="col-xs-2">
+                <img src="images/login_icon_password.png" alt="">
+                </div>
+                <div class="col-xs-10">
+                    <input value="Aa123456" type="password" id="userPwd" placeholder="密码" pattern="\w{6,12}" required autocomplete="off" >
+                </div>
+            </div>
+            <div class="row row3">
+                <div class="col-xs-12">
+                    <input type="button" name="submit" value="登录" class="login-sub text-center">
+                </div>
+            </div>
+            <div class="row row4">
+                <div class="col-xs-3 col-xs-offset-8 ">
+                    <input type="button" class="btn text-center" value="密码重置" id="reset-pwd">
+                </div>
+            </div>
+            <div class="row bottom-content">
+                <div class="col-xs-8 col-xs-offset-2 text-center">
+                    <span>v1.3.1</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="mask_layer">
+        <img src="images/waiting.gif" alt="正在加载" class="center-block">
+    </div>
+    <script src="js/jquery-1.11.3.js"></script>
+    <script src="js/jquery.validate.js"></script>
+    <script src="js/bootstrap.js"></script>
+    <script>
+        /****添加自定义验证规则****/
+
+
+
+        $(function(){
+            checkSession()
+        });
+        function checkSession(){
+            $.ajax({
+                url:"employee/checkSession",
+                type:"post",
+                dataType:"json",
+                success:function(data){
+                    if(data=="200"){
+                        window.localStorage.getItem("token");
+                        window.localStorage.getItem("driverNo");
+                        window.localStorage.getItem("driverName");
+                        window.location.href="menu.html";
+                    }
+                },
+                error:function(data){
+                    alert("服务器繁忙");
+                }
+            })
+        }
+
+
+
+
+        $("#userName").val("");
+        $("#userPwd").val("");
+        var localstroage = window.localStorage;
+        $("#userName").blur(function(){
+            localStorage.setItem("userName",$(this).val());
+        });
+        $(function(){
+            if(localStorage.getItem("userName")!=null){
+                $("#userName").val(localStorage.getItem("userName"));
+            }
+        });
+        $(".login-sub").click(function(){
+            var phoneNum= $("#userName").val();
+            var upwd= $("#userPwd").val();
+            //console.log(phoneNum);
+            if(phoneNum==""){
+//                $("#userName").attr("placeholder","手机号不能为空");
+                diolog_msg("手机号不能为空");
+            }
+            else if(!(/^1[34578]\d{9}$/.test(phoneNum))) {
+//                $("#userName").attr("placeholder","手机号格式不正确");
+                diolog_msg("手机号格式不正确");
+            }else if(upwd==""){
+//                $("#userPwd").attr("placeholder","密码不能为空");
+                diolog_msg("密码不能为空");
+            }else{
+                $(".mask_layer").css("display","block");
+                $(".login-sub").attr("disabled","disabled");
+                $.ajax({
+                    url:"employee/validateMobile",
+                    type:"POST",
+                    async:false,
+                    dataType:"JSON",
+                    data:{"mobileNo":phoneNum},
+                    success:function (data) {
+                        console.log("1111");
+                        if(data.status==200){
+                            $.ajax({
+                                url:"employee/login",
+                                type:"post",
+                                dataType:"json",
+                                data:{
+                                    "mobileNo": phoneNum,
+                                    "password": upwd,
+                                    "openId":"123454352534624235235678"
+                                },
+                                success:function(data){
+                                    console.log(data);
+                                    if(data.status==200){
+                                        localstroage.setItem("token",data.token);
+                                        localstroage.setItem("driverNo",data.driverNo);
+                                        localstroage.setItem("driverName",data.driverName);
+//                                        diolog_msg(data.messageText);
+                                        window.location.href="menu.html";
+                                        $(".mask_layer").css("display","none");
+                                    }else {
+                                       diolog_msg(data.messageText);
+                                        $(".mask_layer").css("display","none");
+                                        $(".login-sub").attr("disabled",false);
+                                    }
+                                },
+                                error:function(){
+                                   diolog_msg("网络不可用");
+                                    $(".mask_layer").css("display","none");
+                                    $(".login-sub").attr("disabled",false);
+                                }
+                            });
+                        }else {
+                            diolog_msg(data.messageText);
+                            $(".mask_layer").css("display","none");
+                        }
+                    },
+                    error:function () {
+                        diolog_msg("网络不可用");
+                    },
+                });
+            }
+        });
+        $("#reset-pwd").click(function(){
+            window.location.href="resetpwd.html";
+        })
+
+
+
+
+    </script>
+</body>
+</html>

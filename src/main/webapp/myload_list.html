@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+    <title>我的装运单</title>
+    <link rel="stylesheet" href="css/bootstrap.css">
+    <!--[if lt IE 9]>
+    <script src="js/html5shiv.min.js"></script>
+    <script src="js/respond.min.js"></script>
+    <![endif]-->
+    <style>
+        body{
+            background: #F4F4F4;
+            background-size: cover;
+            /*font-family: 'Microsoft Yahei' ;*/
+            font-family: Microsoft YaHei,'宋体' , Tahoma, Helvetica, Arial, "\5b8b\4f53", sans-serif;
+        }
+        header{
+            background: #fff;
+            border-bottom:1px solid #c2c2c2;
+            -webkit-box-shadow:0 0.1rem 0.4rem #c2c2c2;
+            -moz-box-shadow:0 0.1rem 0.4rem #c2c2c2;
+            box-shadow:0 0.1rem 0.4rem #c2c2c2;
+        }
+        header .col-xs-6 span{
+            color:#000;
+            font-size:150%;
+            display:inline-block;
+            margin-top:8%;
+        }
+        header .col-xs-3 img{
+            width:4rem;
+            height:auto;
+        }
+        section{
+            margin-top: 16%;
+            margin-bottom:35%;
+        }
+        .container .transf-list{
+            margin:3% 1%;
+        }
+        .container .transf-list li{
+            width:100%;
+            height:25%;
+            background: #fff;
+            border:0;
+            border-radius: .5rem;
+            margin-bottom:3%;
+            border-bottom:1px solid #c2c2c2;
+            -webkit-box-shadow:0 0.1rem 0.2rem #c2c2c2;
+            -moz-box-shadow:0 0.1rem 0.2rem #c2c2c2;
+            box-shadow:0 0.1rem 0.2rem #c2c2c2;
+        }
+        /*.list-group-item .message-detail{*/
+            /*margin-top:8%;*/
+        /*}*/
+        .list-group-item .col-xs-9 .row{
+            width:100%;
+            padding:1% 0;
+            margin:2% 0;
+        }
+        .col-xs-12 .trans-num{
+            color:#000;
+            font-size:130%;
+        }
+        .col-xs-12 .trans_detail{
+            color:#000;
+            font-size:120%;
+        }
+        .col-xs-12 .row .col-xs-6 img{
+            width:1.8rem;
+            margin:-4% 5% 0 0;
+        }
+        .col-xs-12 .row .col-xs-3 img{
+            width:1.8rem;
+            margin:-2% 6% 0 0;
+        }
+        .col-xs-3 img{
+            width:2rem;
+            display:inline-block;
+            vertical-align: middle;
+        }
+         .circle_red{
+            width:5rem;
+            height:5rem;
+            line-height:4.6rem;
+            text-align: center;
+            -webkit-border-radius:2.5rem;
+            -moz-border-radius:2.5rem;
+            border-radius:2.5rem;
+            background: #E20D0D;
+            color:#fff;
+            font-size:4.6rem;
+            position:fixed;
+            right:8%;
+            bottom:10%;
+        }
+    </style>
+</head>
+<body>
+<div class="navbar navbar-fixed-top">
+    <header class="container">
+        <div class="row">
+            <div class="col-xs-3 ">
+                <a href="menu.html"><img src="images/arrow.jpg" alt="" class="img-responsive"></a>
+            </div>
+            <div class="col-xs-6 text-center">
+                <span>我的装运单</span>
+            </div>
+        </div>
+    </header>
+</div>
+<section class="container">
+    <ul class="list-group list-unstyled transf-list">
+
+    </ul>
+</section>
+<div class="circle_red">+</div>
+<script src="js/jquery-1.11.3.js"></script>
+<script src="js/bootstrap.js"></script>
+<script src="js/public.js"></script>
+<script>
+    //加号添加按钮
+    $(".circle_red").click(function () {
+        window.location.href="create_load.html";
+        localstorage.removeItem("orderItemList1");
+    });
+    var localstorage=window.localStorage;//本地存储
+    //提交订单后新生成的订单
+    var orderList=[];
+    if(localstorage.getItem("orderList")!=null){
+        orderList = JSON.parse(localstorage.getItem("orderList"));
+    }
+    var src_date=JSON.parse(localstorage.getItem("src_date"));
+    localstorage.removeItem("src_date");
+    if(src_date!=null){
+        console.log(src_date);
+        orderList.push(src_date);
+    }
+    localstorage.setItem("orderList",JSON.stringify(orderList));
+//    setLocalStorage("orderList",orderList);
+//    localstorage.removeItem("orderList");
+    orderList=JSON.parse(localstorage.getItem("orderList"));
+//    getLocalStorage("orderList","15568373628");
+    console.log(orderList);
+    var outletNo=localstorage.getItem("driverNo");
+//    新建日期以及格式
+    var TodayDate=new Date();
+    var thisYear=TodayDate.getFullYear();
+    var thisMon;
+    if(TodayDate.getMonth()+1<10){
+        thisMon="0"+(TodayDate.getMonth()+1);
+    }else{
+        thisMon=TodayDate.getMonth()+1;
+    }
+    var thisDate;
+    if(TodayDate.getDate()<10){
+        thisDate="0"+(TodayDate.getDate());
+    }else{
+        thisDate=TodayDate.getDate();
+    }
+    var startDate=thisYear+"-"+thisMon+"-"+thisDate;
+    console.log(startDate);//生成时间
+//返回的状态
+    function getStatus(text){
+        if(text!=""){
+            return "挂起";
+        }else{
+            return "完成";
+        }
+    };
+    //时间函数取前8位
+    function getOrderDate(orderDate){
+        var time="";
+        if(orderDate==""||orderDate==undefined){
+            time="";
+            return time;
+        }else {
+            time=orderDate.slice(0,4)+'-'+orderDate.slice(4,6)+'-'+orderDate.slice(6,8);
+            return time;
+        }
+    }
+
+
+
+//司机换手机登录后考虑====================]
+    //
+    $(document).ready(function () {
+        if (orderList.length != 0) {
+            console.log("前端本地");
+            var Order = "";
+            var index = 1;
+            for (var j = 0; j < orderList.length; j++) {
+                Order += '<li TranCodeSrc="' + orderList[j].orderTranCodeSrc + '" class="list-group-item">' +
+                        '<div class="row">' +
+                        '<div class="col-xs-12" >' +
+                        '<div class="row trans-num" onclick=getDetail("' + orderList[j].orderTranCodeSrc + '")>' +
+                        '<div class="col-xs-10">' +
+                        index++ +
+                        '</div>' +
+                        '</div>' +
+                        '<div class="row trans_detail">' +
+                        '<div class="col-xs-6">' +
+                        '<img src="images/icon_calendar.png" alt="">' +
+                        '<span>' + orderList[j].startDate +
+                        '</span>' +
+                        '</div>' +
+                        '<div class="col-xs-3">' +
+                        '<img src="images/icon_finish.png" alt="">' +
+                        '<span>提交</span>' +
+                        '</div>' +
+                        '<div class="col-xs-3 message-detail">' +
+                        '<a href="javascript:void(0);" onclick=getMessage("' + orderList[j].orderTranCodeSrc + '")><img src="images/icon_nor_envelope.png" alt="envelope" ></a>' +
+                        '<img src="images/arrow-sm.jpg" alt="message" >' +
+                        '</div>' +
+                        '</div>' +
+                        '</div>' +
+                        '</div>' +
+                        '</li>'
+            }
+
+            $(".transf-list").append(Order);
+        }
+
+    });
+    var flags=[];
+    $.ajax({
+        url: "order/getUnbillingOrderHeaderList",
+        type: "post",
+        dataType: "JSON",
+        data: {
+            "outletNo": outletNo,
+            "startDate": startDate
+        },
+        success: function (data) {
+            console.log(data);
+            if (data.status == 200) {
+                console.log(data.orderHeaderList);
+                orderHeaderList = data.orderHeaderList;
+//                    order1+='<li TranCodeSrc="'+orderHeaderList[l].foTranCode+'" class="list-group-item">'+
+//                            '<div class="row">'+
+//                            '<div class="col-xs-12" >'+
+//                            '<div class="row trans-num" onclick=getDetail("'+orderHeaderList[l].foTranCode+'")>'+
+//                            '<div class="col-xs-10">'+
+//                            orderHeaderList[l].sapTranCode+
+//                            '</div>'+
+//                            '</div>'+
+//                            '<div class="row trans_detail">'+
+//                            '<div class="col-xs-6">'+
+//                            '<img src="images/icon_calendar.png"  alt="">'+
+//                            '<span>'+getOrderDate(orderHeaderList[l].orderDate)+'</span>'+
+//                            '</div>'+
+//                            '<div class="col-xs-3">'+
+//                            '<img src="images/icon_finish.png" alt="">'+
+//                            '<span>'+getStatus(orderHeaderList[l].usageCode)+'</span>'+
+//                            '</div>'+
+//                            '<div class="col-xs-3 message-detail">'+
+//                            ' <a href="javascript:void(0);" onclick=getMessage("'+orderHeaderList[l].mysccTranCode+'")><img src="images/icon_envelope.png" alt="envelope" class="active"></a>'+
+//                            '<img src="' +
+//                            srcP+
+//                            '" alt="message" >'+
+//                            '</div>'+
+//                            '</div>'+
+//                            '</div>'+
+//                            '</div>'+
+//                            '</li>'
+//            }
+//                $(".transf-list").append(order1);
+            }
+        },
+        complete:function(){
+            $(".list-group-item").each(function(){
+                var $this=$(this);
+                for(var k=0;k<orderHeaderList.length;k++){
+                    if($this.attr("TranCodeSrc")==orderHeaderList[k].mysccTranCode){
+                        console.log(orderHeaderList[k].mysccTranCode);
+                        $this.find(".col-xs-10").html(orderHeaderList[k].sapTranCode);
+                        $this.find(".col-xs-6 span").html(getOrderDate(orderHeaderList[k].orderDate));
+                        $this.find(".col-xs-3 span").html(getStatus(orderHeaderList[k].usageCode));
+                        $.ajax({
+                            url: "order/getDriverMessage",
+                            type: "get",
+                            dataType: "JSON",
+                            data: {tranCodeSrc: orderHeaderList[k].sapTranCode},
+                            success: function (data) {
+                                console.log(data);
+                                if (data.status == 200 && flags[k]==true) {
+                                    console.log($this);
+                                    $this.find("img[alt='envelope']").attr("src","images/icon_envelope.png").addClass("active");
+                                }
+                            },
+                            err: function () {
+                                diolog_msg("网络不可用");
+                            },
+                            complete:function(){
+                                $this.find("img[alt='envelope']").click(function(){
+                                    flags[k]=false;
+                                    localstorage.setItem("flags",flags);
+                                    $this.find("img[alt='envelope']").attr("src","images/icon_nor_envelope.png").removeClass("active");
+                                });
+                            }
+                        });
+                    }
+                }
+
+            });
+        },
+        err: function () {
+            diolog_msg("网络不可用");
+        }
+    });
+
+    function getMessage(TranCodeSrc) {
+        TranCodeSrc=encodeURI(TranCodeSrc);
+        window.location.href="my_message.html?TranCodeSrc="+TranCodeSrc;
+    }
+    function getDetail(TranCodeSrc) {
+        TranCodeSrc=encodeURI(TranCodeSrc);
+        window.location.href="loadlist_detail.html?TranCodeSrc="+TranCodeSrc;
+    }
+
+</script>
+</body>
+</html>

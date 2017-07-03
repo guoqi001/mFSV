@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+    <title>我的消息</title>
+    <link rel="stylesheet" href="css/bootstrap.css">
+    <!--[if lt IE 9]>
+    <script src="js/html5shiv.min.js"></script>
+    <script src="js/respond.min.js"></script>
+    <![endif]-->
+    <style>
+        body{
+            background: #F4F4F4;
+            background-size: cover;
+            font-family: 'Microsoft Yahei';
+        }
+        header{
+            background: #fff;
+            border-bottom:1px solid #c2c2c2;
+            -webkit-box-shadow:0 0.1rem 0.4rem #c2c2c2;
+            -moz-box-shadow:0 0.1rem 0.4rem #c2c2c2;
+            box-shadow:0 0.1rem 0.4rem #c2c2c2;
+        }
+        header .col-xs-6 span{
+            color:#000;
+            font-size:150%;
+            display:inline-block;
+            margin-top:8%;
+        }
+        header .col-xs-3 img{
+            width:4rem;
+            height:auto;
+        }
+        .container .message-list li{
+            width:100%;
+            height:auto;
+            background: #fff;
+            border:0;
+            border-radius: .5rem;
+            margin-top:3%;
+            border-bottom:1px solid #c2c2c2;
+            -webkit-box-shadow:0 0.1rem 0.2rem #c2c2c2;
+            -moz-box-shadow:0 0.1rem 0.2rem #c2c2c2;
+            box-shadow:0 0.1rem 0.2rem #c2c2c2;
+            color:#000;
+            font-size:100%;
+        }
+        .container .message-list li .message_time{
+            color:#999;
+        }
+        section{
+            margin-top:18%;
+        }
+    </style>
+</head>
+<body>
+<header class="navbar navbar-fixed-top">
+    <div class="container">
+        <div class="row">
+           <div class="col-xs-3">
+                <a href="#" onclick="javascript:history.go(-1)"><img src="images/arrow.jpg" alt="" class="img-responsive"></a>
+            </div>
+            <div class="col-xs-6 text-center">
+                <span>我的消息</span>
+            </div>
+        </div>
+    </div>
+</header>
+<section>
+    <div class="container" >
+        <ul class="list-group list-unstyled message-list">
+            <!--<li class="list-group-item" >-->
+               <!--<div class="message_detail">订货10.000箱，货单金额100.00元，即时折扣0.000元，后补折扣0.000元，押金小计0.000元。订单修改成功，无需处理（102）</div>-->
+               <!--<div class="row message_time">-->
+                   <!--<div class="col-xs-6 col-xs-offset-6 text-right">2017-3-24  09:43</div>-->
+               <!--</div>-->
+            <!--</li>-->
+        </ul>
+    </div>
+</section>
+
+<script src="js/jquery-1.11.3.js"></script>
+<script src="js/bootstrap.js"></script>
+<script>
+    //获取地址栏参数
+    function getParams()
+    {
+        var name,value;
+        var str=location.href; //取得整个地址栏
+        var num=str.indexOf("?");
+        str=str.substr(num+1); //取得所有参数   stringvar.substr(start [, length ]
+        var arr=str.split("&"); //各个参数放到数组里
+        for(var i=0;i < arr.length;i++){
+            num=arr[i].indexOf("=");
+            if(num>0){
+                name=arr[i].substring(0,num);
+                value=arr[i].substr(num+1);
+                this[name]=value;
+            }
+        }
+    }
+    var Request=new getParams(); //实例化
+    var TranCodeSrc=decodeURIComponent(Request.TranCodeSrc);
+    $(document).ready(function(){
+        var str="";
+        var localstroage=window.localStorage;
+        var driverNo=localstroage.getItem("driverNo");
+        $.ajax({
+            url:"order/getDriverMessage",
+            type:"get",
+            dataType:"json",
+            data:{
+            "TranCodeSrc":TranCodeSrc
+            } ,
+            success:function(data){
+                console.log(data);
+                if(data.status==200){
+                    for(var i=0;i<data.messageList.length;i++){
+                        str+='<li class="list-group-item" >'+
+                                '<div class="message_detail">' +
+                                data.messageList[i].messageText +
+                                '</div>'+
+                                '<div class="row message_time">'+
+                                '<div class="col-xs-6 col-xs-offset-6 text-right">'+
+                                data.messageList[i].createDate+
+                                '</div>'+
+                                '</div>'+
+                            '</li>'
+                    };
+                    $(".message-list").html(str);
+                }else if(data.status==202){
+                    diolog_msg(data.message);
+                }else {
+                    diolog_msg(data.message);
+                }
+            },
+            err:function(){
+                diolog_msg("网络不可用");
+            }
+        })
+    })
+
+
+</script>
+</body>
+</html>

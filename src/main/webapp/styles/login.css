@@ -1,0 +1,91 @@
+body{
+    /*background:url("../images/login_bg.png") no-repeat;*/
+    background-size: cover;
+    font-family: 'Microsoft Yahei';
+    font-size:1rem;
+}
+.login-box{
+    font-size:180%;
+}
+#logo_pic{
+    margin-top:28%;
+    margin-bottom:28%;
+}
+#logo_pic img{
+    width:55%;
+    height:auto;
+}
+input:focus,button:focus,button:visited{
+    background: #fff;
+    border:0;
+    outline:0;
+}
+.row1,.row2{
+    background: transparent;
+    border-bottom:2px solid #F08E92;
+    margin:5% 7%;
+}
+.col-xs-2 img{
+    width:3.5rem;
+    height:3.5rem;
+    float:left;
+    margin-bottom:20%;
+}
+.col-xs-10 input{
+    background: transparent;
+    border: none;
+    /*width: 80%;*/
+    padding-top: 5%;
+    padding-left:3%;
+    padding-bottom: 3%;
+}
+.row3{
+    border:0;
+    background: transparent;
+    margin:5% 5% 5% 5%;
+}
+
+.row3 .col-xs-12 input.login-sub{
+    width:100%;
+    height:4.5rem;
+    outline:none;
+    border:0;
+    background: #E20D0D;
+    border-radius:2.25rem;
+    padding:0;
+    color:#fff;
+    text-align:center;
+}
+.col-xs-3 input{
+    background:transparent;
+    color:#E42626;
+    font-size:80%;
+}
+.row4 .col-xs-3 input:focus{
+    outline:0;
+    border:0;
+    resize:none;
+}
+.col-xs-8 span{
+    font-size:90%;
+    color:#E74545;
+}
+.bottom-content{
+    margin-top:18%;
+}
+.mask_layer{
+    position:absolute;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    z-index:100;
+    display:none;
+    /*filter:alpha(opacity=0);*/
+    background: #eee;
+    filter: alpha(opacity=10); /* IE的透明度 */
+    opacity: 0.10;  /* 透明度 */
+}
+.mask_layer img{
+    margin-top:60%;
+}

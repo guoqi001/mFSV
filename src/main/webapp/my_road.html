@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+    <title>我的行程</title>
+    <link rel="stylesheet" href="css/bootstrap.css">
+    <!--[if lt IE 9]>
+    <script src="js/html5shiv.min.js"></script>
+    <script src="js/respond.min.js"></script>
+    <![endif]-->
+    <style>
+        body{
+            background: #F4F4F4;
+            background-size: cover;
+            font-family: 'Microsoft Yahei';
+        }
+        header{
+            background: #fff;
+            border-bottom:1px solid #c2c2c2;
+            -webkit-box-shadow:0 0.1rem 0.4rem #c2c2c2;
+            -moz-box-shadow:0 0.1rem 0.4rem #c2c2c2;
+            box-shadow:0 0.1rem 0.4rem #c2c2c2;
+        }
+        header .col-xs-6 span{
+            color:#000;
+            font-size:150%;
+            display:inline-block;
+            margin-top:8%;
+        }
+        header .col-xs-3 img{
+            width:4rem;
+            height:auto;
+        }
+        section{
+            margin-top: 16%;
+        }
+        .container .road-list{
+            margin:3% 1%;
+        }
+        .container .road-list li{
+            width:100%;
+            height:28%;
+            background: #fff;
+            border:0;
+            border-radius: .5rem;
+            margin-bottom:3%;
+            border-bottom:1px solid #c2c2c2;
+            -webkit-box-shadow:0 0.1rem 0.2rem #c2c2c2;
+            -moz-box-shadow:0 0.1rem 0.2rem #c2c2c2;
+            box-shadow:0 0.1rem 0.2rem #c2c2c2;
+        }
+        .list-group-item .message-detail{
+            margin-top:8%;
+        }
+        .list-group-item .col-xs-9 .row{
+            width:100%;
+            padding:1% 0;
+            margin:2% 0;
+        }
+        .list-group-item .col-xs-9 .row .visitper{
+            color:#E20D0D;
+        }
+        .col-xs-9 .trans-num{
+            color:#000;
+            font-size:140%;
+            /*font-weight:bold;*/
+        }
+        .col-xs-9 .row .col-xs-6 img{
+            width:1.4rem;
+            margin:-4% 4% 0 0;
+        }
+
+        .message-detail input{
+            color:#fff;
+            background: #E20D0D;
+            width:100%;
+            height:40%;
+            border:0;
+            border-radius: .4rem;
+            font-size:100%;
+            padding:6px 3px;
+            /*text-align:center;*/
+        }
+        .btn:active,.btn:focus,.btn:visited{
+            color:#fff;
+            outline: none;
+        }
+        .message-detail input.no_active{
+            background: #999999;
+        }
+        /*.col-xs-4.message-detail{*/
+            /*padding-left:0;*/
+        /*}*/
+    </style>
+</head>
+<body>
+<header class="navbar navbar-fixed-top">
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-3 ">
+                <a href="#"><img src="images/arrow.jpg" alt="" class="img-responsive return_last"></a>
+            </div>
+            <div class="col-xs-6 text-center">
+                <span>我的行程</span>
+            </div>
+        </div>
+    </div>
+</header>
+<section class="container">
+    <ul class="list-group list-unstyled road_list">
+    </ul>
+</section>
+
+<script src="js/jquery-1.11.3.js"></script>
+<script src="js/bootstrap.js"></script>
+<script>
+    var localstroage=window.localStorage;
+    var driverNo=localstroage.getItem("driverNo");
+    var token=localstroage.getItem("token");
+    var message_list="";
+    function loadData(){
+        console.log(1);
+        $.ajax({
+            url:"scheduling/getShipmentList",
+            type:"get",
+            dataType:"json",
+            data:{
+                "token": token,
+                "driverNo": driverNo,
+                "shipmentType": "Z002"
+            },
+            success:function(data){
+                console.log(data);
+                if(data.status==200){
+                    for(var i=0;i<data.shipmentList.length;i++){
+                        message_list+='<li class="list-group-item" shipmentCode="'+data.shipmentList[i].shipmentCode+'" )>'+
+                                '<div class="row">'+
+                                '<div class="col-xs-9" style="padding-right:0" onclick=goCustomerList("'+data.shipmentList[i].shipmentCode+'")>'+
+                                '<div class="row trans-num">'+
+                                '<div class="col-xs-10">' +data.shipmentList[i].shipmentCode+
+                                '</div>'+
+                                '</div>'+
+                                '<div class="row">'+
+                                '<div class="col-xs-6" style="padding-right:0">'+
+                                '<img src="images/icon_calendar.png" alt="">'+
+                                '<span>' +
+                                data.shipmentList[i].deliveryDate+
+                                '</span>'+
+                                '</div>'+
+                                '<div class="col-xs-3" style="padding-right:0;padding-left:0">'+
+                                '<span>' + deliver_code(data.shipmentList[i].deliveryStatus) + '</span>'+
+                                '</div>'+
+                                '<div class="col-xs-3" style="padding-right:0;padding-left:0">'+
+                                '<span class="visitper">0/0</span>'+
+                                '</div>'+
+                                '</div>'+
+                                '</div>'+
+                                '<div class="col-xs-3 message-detail" style="padding-left:0">'+
+                                '<input type="button" class="btn text-center delivery" deliveryStatus="' + data.shipmentList[i].deliveryStatus + '" name="baozhang" value="'+getButtonText(data.shipmentList[i].deliveryStatus)+'"  onclick=delivery("' + data.shipmentList[i].deliveryStatus + '","' + data.shipmentList[i].shipmentCode + '")>'+
+                                '</div>'+
+                                '</div>'+
+                                '</li>'
+                    }
+                    $(".road_list").html(message_list);
+
+                }else {
+                    diolog_msg(data.messageText);
+                }
+            },
+            err:function(){
+                diolog_msg(data.messageText);
+            },
+            complete:function(){
+                var visitPercentList=[];
+                $("li").each(function(){
+                    var shipmentCode=$(this).attr("shipmentCode");
+                    if(localstroage.getItem("visitPercentList")!=null){
+                        visitPercentList=JSON.parse(localstroage.getItem("visitPercentList"));
+                        console.log(visitPercentList);
+                        for(var j=0;j<visitPercentList.length;j++){
+                            if(shipmentCode==visitPercentList[j].shipmentCode){
+                                $(this).find(".visitper").html(visitPercentList[j].percent);
+                            }
+                        }
+                    }
+//                    $.ajax({
+//                        url:"scheduling/getDriverOutlet",
+//                        type:"POST",
+//                        dataType:"json",
+//                        data:{"shipmentCode":shipmentCode,"driverNo":driverNo},
+//                        success:function (data) {
+//                            console.log(data);
+//                            if(data.status==200){
+//                                var totalNum=data.outletList.length;
+//                                var visitedNo=0;
+//                                for(var a=0;a<data.outletList.length;a++){
+//                                    if(data.outletList[a].refillFlag=="1"){
+//                                        visitedNo+=1;
+//                                    }
+//                                }
+//                            }
+//                            $(this).find(".visitper").html(visitedNo+"/"+totalNum);
+//                        }
+//                    })
+                })
+            }
+        })
+    }
+    loadData();
+
+    $(".return_last").click(function(){
+        window.location.href="menu.html";
+    });
+//    $(".return_last").on("click",".delivery",function () {
+//        console.log($(this).html());
+//        if($(this).html()=="报账"){
+//            $.ajax({
+//                url:"scheduling/CSConfirm",
+//                type:"POST",
+//                dataType:"json",
+//                data:{"shipmentCode":$(this).attr("shipmentCode"),"csConfirm":1},
+//                success:function (data) {
+//                    if(data.status==200&&data.messageId==0){
+//                        diolog_msg(data.messageText);
+//                        $(this).html("已报账");
+//                    }else if(data.status==200&&(data.messageId==2||data.messageId==3)){
+//                        diolog_msg(data.messageText);
+//                        $(this).html("已报账").attr("disable","true").css("background-color","gray");
+//                    }else if(data.status==500&&data.messageId==1){
+//                        diolog_msg(data.messageText);
+//                    }
+//                },
+//                error:function () {
+//                    diolog_msg("提交失败");
+//                }
+//            });
+//        }else if($(this).html()=="取消报账"){
+//            $.ajax({
+//                url:"scheduling/CSConfirm",
+//                type:"POST",
+//                dataType:"json",
+//                data:{"shipmentCode":$(this).attr("shipmentCode"),"csConfirm":0},
+//                success:function (data) {
+//                    if(data.status==200&&data.messageId==0){
+//                        diolog_msg(data.messageText);
+//                        $(this).html("报账");
+//                    }else if(data.status==200&&(data.messageId==2||data.messageId==3)){
+//                        diolog_msg(data.messageText);
+//                        $(this).attr("disable","true").css("background-color","gray");
+//                    }else if(data.status==500&&data.messageId==1){
+//                        diolog_msg(data.messageText);
+//                    }
+//                },
+//                error:function () {
+//                    diolog_msg("提交失败");
+//                }
+//            });
+//        }
+//    });
+    function  deliver_code(status_code) {
+        if(status_code==1){
+            return "已报账";
+        }else if(status_code==0){
+            return "未报账";
+        }else if(status_code==2){
+            return "未报账";
+        }
+    }
+    function  getButtonText(code) {
+        if(code==1){
+            return "取消报账";
+        }else if(code==0){
+            return "报账";
+        }else if(code==2){
+            return "报账";
+        }
+    }
+    function delivery(num,shipmentCode) {
+        var csConfirm="";
+        if(num==0||num==2){
+            csConfirm=1;
+        }else if(num==1){
+            csConfirm=0;
+        }
+        console.log(csConfirm);
+        $.ajax({
+            url:"scheduling/CSConfirm",
+            type:"POST",
+            dataType:"json",
+            data:{"shipmentCode":shipmentCode,"csConfirm":csConfirm},
+            success:function (data) {
+                console.log(data);
+                if(data.status==200&&data.messageId==0){
+                    diolog_msg(data.messageText);
+                    window.location.href="my_road.html";
+                }else if(data.status==200&&(data.messageId==2||data.messageId==3)){
+                    diolog_msg(data.messageText);
+                    window.location.href="my_road.html";
+                    $(this).attr("disabled","true").addClass("no_active");
+                }else {
+                    diolog_msg(data.messageText);
+                }
+            },
+            error:function () {
+                diolog_msg("请求失败请检查网络");
+            }
+        });
+    }
+    function goCustomerList(shipmentCode){
+        console.log();
+        if($("[shipmentCode='"+shipmentCode+"']").find("[name='baozhang']").val()=="报账"){
+            window.localStorage.setItem("delive","0");
+        }else if($("[shipmentCode='"+shipmentCode+"']").find("[name='baozhang']").val()=="取消报账"){
+            window.localStorage.setItem("delive","1");
+        }
+        window.location.href="customer_list.html?shipmentCode="+shipmentCode;
+    }
+localStorage.removeItem("orderItemList1");
+</script>
+
+</body>
+</html>

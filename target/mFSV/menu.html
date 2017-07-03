@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+    <title>菜单</title>
+    <link rel="stylesheet" href="css/bootstrap.css">
+    <!--[if lt IE 9]>
+    <script src="js/html5shiv.min.js"></script>
+    <script src="js/respond.min.js"></script>
+    <![endif]-->
+    <style>
+        body{
+            background: #E20D0D;
+            background-size: cover;
+            font-family: 'Microsoft Yahei';
+        }
+        header{
+            background: #fff;
+            border-bottom:1px solid #c2c2c2;
+            -webkit-box-shadow:0 0.1rem 0.4rem #c2c2c2;
+            -moz-box-shadow:0 0.1rem 0.4rem #c2c2c2;
+            box-shadow:0 0.1rem 0.4rem #c2c2c2;
+        }
+       /*.panel-body{padding:0;}*/
+        .col-xs-4 img{
+            width:100%;
+            height:auto;
+        }
+        .panel_list ul{
+            margin-top:5%;
+        }
+        .list_detail{
+            background-color: #fff;
+            border: 1px solid transparent;
+            border-radius: 5%;
+            -webkit-box-shadow: 0 1px 1px rgba(0, 0, 0, .05);
+            box-shadow: 0 1px 1px rgba(0, 0, 0, .05);
+            width:31%;
+            height:33%;
+            margin:2% 0.5%;
+            padding:5%;
+            position:relative;
+        }
+        section{
+            margin-top:16%;
+        }
+        .panel_list{
+            margin-left: 3%;
+        }
+        .mask_layer{
+            position:absolute;
+            top:0;
+            left:0;
+            width:100%;
+            height:100%;
+            z-index:100;
+            background: #000;
+            filter: alpha(opacity=10); /* IE的透明度 */
+            opacity: 0.1;  /* 透明度 */
+        }
+    </style>
+</head>
+<body>
+<header class="navbar navbar-fixed-top">
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-4">
+                <img src="images/home_logo.png" alt="" class="img-responsive">
+            </div>
+        </div>
+    </div>
+</header>
+<section class="container">
+    <div class="panel_list">
+        <ul class="list-group list-inline list-unstyled" >
+            <li class="list_detail text-center">
+                <div class="mask_layer"></div>
+                <img src="images/icon_daystart.png" alt="test.html">
+                <div>日开始</div>
+             </li>
+            <li class="list_detail text-center">
+                <div class="mask_layer"></div>
+                <img src="images/icon_matter.png" alt="">
+                <div>代办事项</div>
+            </li>
+            <li class="list_detail text-center">
+                <img src="images/icon_stroke.png" alt="my_road.html">
+                <div>我的行程</div>
+            </li>
+            <li class="list_detail text-center">
+                <img src="images/icon_message.png" alt="my_messageList.html">
+                <div>我的消息</div>
+            </li>
+            <li class="list_detail text-center">
+                <div class="mask_layer"></div>
+                <img src="images/icon_client.png" alt="">
+                <div>我的客户</div>
+            </li>
+            <li class="list_detail text-center">
+                <img src="images/icon_inventory.png" alt="my_stock.html">
+                <div>我的库存</div>
+            </li>
+            <li class="list_detail text-center">
+                <img src="images/icon_order.png" alt="myload_list.html">
+                <div>我的装运单</div>
+            </li>
+            <li class="list_detail text-center">
+                <div class="mask_layer"></div>
+                <img src="images/icon_toolbox.png" alt="">
+                <div>工具箱</div>
+            </li>
+            <li class="list_detail text-center">
+                <div class="mask_layer"></div>
+                <img src="images/icon_infor.png" alt="">
+                <div>个人资料</div>
+            </li>
+        </ul>
+    </div>
+</section>
+<script src="js/jquery-1.11.3.js"></script>
+<script src="js/bootstrap.js"></script>
+<script>
+
+    jQuery(document).ready(function($) {
+
+        if (window.history && window.history.pushState) {
+
+            $(window).on('popstate', function() {
+
+                var hashLocation = location.hash;
+                var hashSplit = hashLocation.split("#!/");
+                var hashName = hashSplit[1];
+                if (hashName !== '') {
+                    var hash = window.location.hash;
+                    if (hash === '') {
+                        cleanSession();
+                    }
+                }
+            });
+            window.history.pushState(null, null, null);
+        }
+
+    });
+    function cleanSession() {
+
+        $.ajax({
+            url:"employee/cleanSession",
+            type:"post",
+            data:{
+            },
+            dataType:"json",
+            success:function(data) {
+
+                    window.location.href = "login.html";
+            },
+               error:function(data){
+                alert("服务器繁忙");
+            }
+        });
+
+
+    }
+
+
+
+
+    $("ul.list-group").on("click","li",function () {
+        window.location=$(this).find("img").attr("alt");
+    })
+
+</script>
+</body>
+</html>

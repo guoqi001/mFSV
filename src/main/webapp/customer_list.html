@@ -1,0 +1,608 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+    <title>客户清单</title>
+    <link rel="stylesheet" href="css/bootstrap.css">
+    <!--[if lt IE 9]>
+    <script src="js/html5shiv.min.js"></script>
+    <script src="js/respond.min.js"></script>
+    <![endif]-->
+    <style>
+        body{
+            background: #F4F4F4;
+            background-size: cover;
+            font-family: 'Microsoft Yahei';
+        }
+        header{
+            background: #fff;
+            border-bottom:1px solid #c2c2c2;
+            -webkit-box-shadow:0 0.1rem 0.4rem #c2c2c2;
+            -moz-box-shadow:0 0.1rem 0.4rem #c2c2c2;
+            box-shadow:0 0.1rem 0.4rem #c2c2c2;
+        }
+        header .col-xs-6 span{
+            color:#000;
+            font-size:150%;
+            display:inline-block;
+            margin-top:8%;
+        }
+        header .col-xs-3 img{
+            width:4rem;
+            height:auto;
+        }
+        input{
+            border:0;
+            outline:0;
+        }
+        input:focus{
+            border:0;
+            outline:0;
+        }
+        .container .customer-list li{
+            width:100%;
+            height:25%;
+            background: #fff;
+            border:0;
+            border-radius: .5rem;
+            margin:3% 0;
+            border-bottom:1px solid #c2c2c2;
+            -webkit-box-shadow:0 0.1rem 0.2rem #c2c2c2;
+            -moz-box-shadow:0 0.1rem 0.2rem #c2c2c2;
+            box-shadow:0 0.1rem 0.2rem #c2c2c2;
+        }
+        .customer-list .customer_name{
+            font-size:130%;
+            font-weight:bold;
+        }
+        .customer-list .customer_loca{
+            font-size:90%;
+            color:#6F6F6F;
+        }
+        .customer-list .customer_loca .col-xs-4,.customer-list .customer_loca .col-xs-8{
+            padding:0;
+        }
+        .customer-list .equip_detail{
+            color:#aaa;
+            font-size:90%;
+        }
+        .customer-list .equip_detail span{
+            color:#000;
+        }
+        section{
+            margin-top:16%;
+            margin-bottom:35%;
+        }
+        section .container>.row{
+            background: #fff;
+            font-size: 160%;
+            text-align:center;
+            padding:5% 0;
+        }
+        section .container>.row>.col-xs-6:first-child{
+           border-right:1px solid #D1D1D1;
+        }
+        section .container>.row>.col-xs-6 span{
+            color:#F40000;
+            margin:0 3%;
+        }
+        .circle_red{
+            width:5rem;
+            height:5rem;
+            line-height:4.6rem;
+            text-align: center;
+            -webkit-border-radius:2.5rem;
+            -moz-border-radius:2.5rem;
+            border-radius:2.5rem;
+            background: #E20D0D;
+            color:#fff;
+            font-size:4.6rem;
+            position:fixed;
+            right:8%;
+            bottom:8%;
+        }
+        .col-xs-10 .customer_name .active1{
+            color:#E62B2B;
+        }
+        .active2{
+            color:#EA5A2A;
+        }
+        img{
+            margin-right:4%;
+        }
+    </style>
+</head>
+<body>
+<header class="navbar navbar-fixed-top">
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-3 ">
+                <a href="my_road.html"><img src="images/arrow.jpg" alt="" class="img-responsive"></a>
+            </div>
+            <div class="col-xs-6 text-center">
+                <span>客户清单</span>
+            </div>
+        </div>
+    </div>
+</header>
+<section>
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-6">拜访 <span class="percent_b"><b class="visit1">0</b>/<b class="total">0</b></span></div>
+            <div class="col-xs-6">下单 <span class="percent_x"><b class="visit">0</b>/<b class="total">0</b></span></div>
+        </div>
+        <ul class="list-group list-unstyled customer-list">
+            <!--<li class="list-group-item">-->
+                <!--<div class="row">-->
+                    <!--<div class="col-xs-2 img-ad" style="padding:3%">-->
+                        <!--<img src="images/icon_equip.png" alt="" class="img-responsive img-circle  center-block">-->
+                    <!--</div>-->
+                    <!--<div class="col-xs-10">-->
+                        <!--<div class="row customer_name">-->
+                            <!--<div class="col-xs-12">杭州华联超市庆春店</div>-->
+                        <!--</div>-->
+                        <!--<div class="row customer_loca">-->
+                            <!--<div class="col-xs-8">-->
+                                <!--<img src="images/icon_locate.png" alt="" class="img-responsive " style="display:inline;width:13px">-->
+                                <!--<span>浙江省杭州市江干区凯旋路</span>-->
+                            <!--</div>-->
+                            <!--<div class="col-xs-4">-->
+                                <!--<img src="images/icon_qudao.png" alt="" class="img-responsive"  style="display:inline;width:13px">-->
+                                <!--<span>H40</span>-->
+                            <!--</div>-->
+                        <!--</div>-->
+                    <!--</div>-->
+                <!--</div>-->
+                <!--<div class="row equip_detail">-->
+                    <!--<div class="col-xs-12">机器型号:<span>富士冰山FVM-CC22(CO2)</span></div>-->
+                <!--</div>-->
+                <!--<div class="row equip_detail">-->
+                    <!--<div class="col-xs-6" style="padding-right:0">上次补货:<span>2017-03-26</span></div>-->
+                    <!--<div class="col-xs-6" style="padding-left:0">客户编号:<span>1207347489</span></div>-->
+                <!--</div>-->
+                <!--<div class="row equip_detail">-->
+                    <!--<div class="col-xs-12">资产编号:<span>120GB0212322</span></div>-->
+                <!--</div>-->
+            <!--</li>-->
+        </ul>
+    </div>
+</section>
+<div class="circle_red">+</div>
+
+
+
+<script src="js/jquery-1.11.3.js"></script>
+<script src="js/bootstrap.js"></script>
+<script>
+    var localstorage = window.localStorage;//本地存储
+    var totalNum=0;//客户总数
+    var userAttributeList=[];
+    var visitNum=0;//拜访数
+    var driverNo=localstorage.getItem("driverNo");
+    //拜访数目
+    if(JSON.parse(sessionStorage.getItem("visit"))!=null){
+        visit=JSON.parse(sessionStorage.getItem("visit"));
+    }
+//    localstorage.removeItem("customerList1");
+//    localstorage.removeItem("userAttributeList");
+//    localstorage.removeItem("visitesList");
+    //添加客户列表
+    if(JSON.parse(localstorage.getItem("userAttributeList"))!=null){
+        userAttributeList=JSON.parse(localstorage.getItem("userAttributeList"));
+        console.log(userAttributeList);
+    }
+    //添加客户
+    if(localstorage.getItem("userAttribute")){
+        var userAttribute=JSON.parse(localstorage.getItem("userAttribute"));
+        console.log(userAttribute);
+        userAttributeList.push(userAttribute);
+        localstorage.setItem("userAttributeList",JSON.stringify(userAttributeList));
+        console.log(JSON.parse(localstorage.getItem("userAttributeList")));
+    }
+    //获取地址栏参数
+    function getParams()
+    {
+        var name,value;
+        var str=location.href; //取得整个地址栏
+        var num=str.indexOf("?");
+        str=str.substr(num+1); //取得所有参数   stringvar.substr(start [, length ]
+        var arr=str.split("&"); //各个参数放到数组里
+        for(var i=0;i < arr.length;i++){
+            num=arr[i].indexOf("=");
+            if(num>0){
+                name=arr[i].substring(0,num);
+                value=arr[i].substr(num+1);
+                this[name]=value;
+            }
+        }
+    }
+    var Request=new getParams(); //实例化
+    console.log(Request);
+    var shipmentCode=decodeURIComponent(Request.shipmentCode);
+    localstorage.setItem("shipmentCode",shipmentCode);
+    console.log(shipmentCode);
+    console.log(localstorage.getItem("shipmentCode"));
+//    var driverNo=localstorage.getItem("driverNo");
+//    if(localstorage.getItem("customerList1")!=null){
+//        var customerList1=JSON.parse(localstorage.getItem("customerList1"));
+//        localData();
+//        console.log(customerList1);
+//    }else{
+//        loadData(shipmentCode);
+//    }
+    function loadData(shipmentCode) {
+        console.log("loadData");
+        $.ajax({
+            url:"scheduling/getDriverOutlet",
+            type:"POST",
+            async: false,
+            dataType:"json",
+            data:{"shipmentCode":shipmentCode,"driverNo":driverNo},
+            success:function (data) {
+                if(data.status==200){
+                    console.log(data);
+                    var outletList=data.outletList;
+                    totalNum=data.outletList.length;
+                    console.log(totalNum);
+                    var deviceList="";
+                    var MachineStatus="";
+                    var dataHtml="";
+                    var flag1=false;
+                    var flag2=false;
+                    for(var i=0;i<outletList.length;i++){
+                        outletList[i].refillFlag==1 && visitNum++;
+                        $.ajax({
+                            url:"scheduling/getCustomerDeviceList",
+                            type:"POST",
+                            async: false,
+                            dataType:"json",
+                            data:{"outletNo":outletList[i].outletNo},
+                            success:function (data) {
+                                console.log(data);//机器型号资产编号
+                                if(data.status==200){
+                                    deviceList=data.deviceList[0];
+                                    console.log(deviceList);
+                                    flag1=true;
+                                }else if(data.status==202){
+                                    flag1=true;
+                                    deviceList={
+                                        "modelCode":"",
+                                        "assetCode":""
+                                    }
+                                }
+                                else {
+                                    diolog_msg(data.message);
+                                }
+                            },
+                            error:function () {
+                                diolog_msg("网络不可用");
+                            }
+                        });
+                        $.ajax({
+                            url:"scheduling/getMachineStatus",
+                            type:"post",
+                            async: false,
+                            dataType:"json",
+                            data:{"outletNo":outletList[i].outletNo},
+                            success:function (data) {
+                                if(data.status==200 ){
+                                    console.log(data);
+                                    MachineStatus=data;
+                                    flag2=true;
+                                }else{
+                                    diolog_msg(data.message);
+                                }
+                            },
+                            error:function () {
+                                diolog_msg("网络不可用");
+                            }
+                        });
+                        if(flag1&&flag2){
+                            dataHtml+='<li class="list-group-item" outletNo="'+data.outletList[i].outletNo+'">'+
+                                '<div class="row">'+
+                                '<div class="col-xs-2 img-ad" style="padding:3%">'+
+                                '<img src="images/icon_equip.png" alt="" class="img-responsive img-circle  center-block">'+
+                                '</div>'+
+                                '<div class="col-xs-10">'+
+                                '<div class="row customer_name">'+
+                                '<div class="col-xs-12 outletName' +
+                                getrefillFlag(data.outletList[i].refillFlag) +
+                                '">'+outletList[i].outletName+'</div>'+
+                                '</div>'+
+                                '<div class="row customer_loca">'+
+                                '<div class="col-xs-8">'+
+                                '<img src="images/icon_locate.png" alt="" class="img-responsive " style="display:inline;width:13px">'+
+                                '<span class="outletAddress">'+outletList[i].outletAddress+'</span>'+
+                                '</div>'+
+                                '<div class="col-xs-4">'+
+                                '<img src="images/icon_qudao.png" alt="" class="img-responsive"  style="display:inline;width:13px">'+
+                                '<span class="outletChannel">'+outletList[i].outletChannel+'</span>'+
+                                '</div>'+
+                                '</div>'+
+                                '</div>'+
+                                '</div>'+
+                                '<div class="row equip_detail">'+
+                                '<div class="col-xs-12">机器型号:<span>'+deviceList.modelCode+'</span></div>'+
+                                '</div>'+
+                                '<div class="row equip_detail">'+
+                                '<div class="col-xs-6 lastDeliveryDate" style="padding-right:0">上次补货:<span>'+getLastDeliveryDate(MachineStatus.lastDeliveryDate)+'</span></div>'+
+                                '<div class="col-xs-6" style="padding-left:0">客户编号:<span class="outletNo">'+outletList[i].outletNo+'</span></div>'+
+                                '</div>'+
+                                '<div class="row equip_detail">'+
+                                '<div class="col-xs-8">资产编号:<span>'+deviceList.assetCode+'</span></div>'+
+                                '<div class="col-xs-1" style="padding-left: 0;padding-top: 1%">'+getDamageFlag(MachineStatus.damageFlag)+'</div>'+
+                                '<div class="col-xs-1" style="padding-left: 2%;padding-right: 4%">'+getOosFlag(MachineStatus.oosFlag)+'</div>'+
+                                '<div class="col-xs-1 colvFlag" style="padding-left: 0;padding-top: 2%">'+getColvFlag(MachineStatus.colvFlag)+'</div>'+
+                                '</div>'+
+                                '</li>';
+                        }
+                    }
+                    $(".customer-list").html(dataHtml);
+                }else {
+//                    diolog_msg(data.message);
+                }
+            },
+            complete:function () {
+                if(JSON.parse(localstorage.getItem("userAttributeList"))!=null){
+                    userAttributeList=JSON.parse(localstorage.getItem("userAttributeList"));
+                    totalNum=Number(totalNum)+userAttributeList.length;
+                    localstorage.removeItem("userAttribute");
+                }
+                console.log(userAttributeList);
+                if(userAttributeList.length!=0){
+                    var deviceList="";
+                    var MachineStatus1="";
+                    var dataHtml="";
+                    var flag1=false;
+                    var flag2=false;
+                    for(var i=0;i<userAttributeList.length;i++){
+                        $.ajax({
+                            url:"scheduling/getCustomerDeviceList",
+                            type:"POST",
+                            async: false,
+                            dataType:"json",
+                            data:{"outletNo":userAttributeList[i].outletNo},
+                            success:function (data) {
+                                console.log(data);
+                                if(data.status==200 ){
+                                    deviceList=data.deviceList[0];
+                                    flag1=true;
+                                }else  if(data.status==202){
+                                    flag1=true;
+                                    deviceList={
+                                        "modelCode":"",
+                                        "assetCode":""
+                                    }
+                                }
+                            },
+                            error:function () {
+                                diolog_msg("网络不可用");
+                            }
+                        });
+                        $.ajax({
+                            url:"scheduling/getMachineStatus",
+                            async: false,
+                            type:"post",
+                            dataType:"json",
+                            data:{"outletNo":userAttributeList[i].outletNo},
+                            success:function (data) {
+                                console.log(data);
+                                if(data.status==200){
+                                    MachineStatus1=data;
+                                    console.log(data);
+                                    flag2=true;
+                                }else {
+//                                    diolog_msg(data.message);
+                                }
+                            },
+                            error:function () {
+                                diolog_msg("网络不可用");
+                            }
+                        });
+                        if(flag1&&flag2){
+                            dataHtml+='<li class="list-group-item" outletNo="'+userAttributeList[i].outletNo+'">'+
+                                    '<div class="row">'+
+                                    '<div class="col-xs-2 img-ad" style="padding:3%">'+
+                                    '<img src="images/icon_equip.png" alt="" class="img-responsive img-circle  center-block">'+
+                                    '</div>'+
+                                    '<div class="col-xs-10">'+
+                                    '<div class="row customer_name">'+
+                                    '<div class="col-xs-12 outletName' +
+                                    getrefillFlag(0)+
+//                                    getrefillFlag(userAttributeList[i].refillFlag)+
+                                    '">'+userAttributeList[i].outletName+'</div>'+
+                                    '</div>'+
+                                    '<div class="row customer_loca">'+
+                                    '<div class="col-xs-8">'+
+                                    '<img src="images/icon_locate.png" alt="" class="img-responsive " style="display:inline;width:13px">'+
+                                    '<span class="outletAddress">'+userAttributeList[i].outletAddress+'</span>'+
+                                    '</div>'+
+                                    '<div class="col-xs-4">'+
+                                    '<img src="images/icon_qudao.png" alt="" class="img-responsive"  style="display:inline;width:13px">'+
+                                    '<span class="outletChannel">'+userAttributeList[i].outletChannel+'</span>'+
+                                    '</div>'+
+                                    '</div>'+
+                                    '</div>'+
+                                    '</div>'+
+                                    '<div class="row equip_detail">'+
+                                    '<div class="col-xs-12">机器型号:<span>'+deviceList.modelCode+'</span></div>'+
+                                    '</div>'+
+                                    '<div class="row equip_detail">'+
+                                    '<div class="col-xs-6 lastDeliveryDate" style="padding-right:0">上次补货:<span>'+getLastDeliveryDate(MachineStatus1.lastDeliveryDate)+'</span></div>'+
+                                    '<div class="col-xs-6" style="padding-left:0">客户编号:<span class="outletNo">'+userAttributeList[i].outletNo+'</span></div>'+
+                                    '</div>'+
+                                    '<div class="row equip_detail">'+
+                                    '<div class="col-xs-8">资产编号:<span>'+deviceList.assetCode+'</span></div>'+
+                                    '<div class="col-xs-1" style="padding-left:0;padding-top:1%">'+getDamageFlag(MachineStatus1.damageFlag)+'</div>'+
+                                    '<div class="col-xs-1" style="padding-left:2%;padding-right:4%">'+getOosFlag(MachineStatus1.oosFlag)+'</div>'+
+                                    '<div class="col-xs-1 colvFlag" style="padding-left:0;padding-top:2%">'+getColvFlag(MachineStatus1.colvFlag)+'</div>'+
+                                    '</div>'+
+                                    '</li>';
+                        }
+                    }
+                    $(".customer-list").append(dataHtml);
+                }
+                $(".visit").html(visitNum);//下单数
+                $(".total").html(totalNum);//拜访总数
+                var visitPercentList=[];//拜访比例
+                var visitList={};//拜访数据
+                var percent;//拜访比例
+                var visitedNum=0;//下单
+                var visit1=0;//拜访
+                $("li").each(function(){
+//                    total+=1;
+                    var outletName=$(this).find(".outletName").html();
+                    var outletAddress=$(this).find(".outletAddress").html();
+                    var outletChannel=$(this).find(".outletChannel").html();
+                    var outletNo=$(this).find(".outletNo").html();
+                    customerItem={
+                        "outletName":outletName,
+                        "outletAddress":outletAddress,
+                        "outletChannel":outletChannel,
+                        "outletNo":outletNo
+                    };
+                    if($(this).find(".colvFlag").html()==""){
+                        $(".lastDeliveryDate").css("visibility","hidden");
+                        $(this).find(".col-xs-1").css("visibility","hidden")
+                    }
+                    //点击客户进入补货
+                    var visitesList=[];//
+                    $(".customer-list").on("click","li",function () {
+                        var outletNo=$(this).attr("outletNo");
+                        if($(this).find(".lastDeliveryDate span").html()!=null){
+                            localstorage.setItem("lastDeliveryDate",$(this).find(".lastDeliveryDate span").html());
+                        }
+                        if(!$(this).hasClass("active1")){
+                            $(this).find(".outletName").addClass("active2");
+                        }
+                        if(sessionStorage.getItem("visitesList")!=null){
+                            var flag4;
+                            visitesList=JSON.parse(sessionStorage.getItem("visitesList"));
+                            for(var m=0;m<visitesList.length;m++){
+                                if(visitesList[m]==outletNo){
+                                    flag4=true;
+                                }
+                            }
+                            flag4=false && visitesList.push(outletNo);
+                        }
+                        visitesList.push(outletNo);
+                        sessionStorage.setItem("visitesList",JSON.stringify(visitesList));
+                        window.localStorage.setItem("outletNo",outletNo);
+                        window.location.href="choose_type.html";
+                    });
+                    if(JSON.parse(sessionStorage.getItem("visitesList"))!=null){
+                        visitesList=JSON.parse(sessionStorage.getItem("visitesList"));
+                        for(var b=0;b<visitesList.length;b++){
+                            outletNo==visitesList[b] && $(this).find(".outletName").addClass("active2");
+                        }
+                    }
+                    //拜访过的数量
+                    if($(this).find(".outletName").hasClass("active1")){
+                        console.log("active1");
+                        ++visitedNum; ++visit1;
+                    };
+                    if($(this).find(".outletName").hasClass("active2")){
+                        visit1+=1;
+                        console.log("active2");
+                    };
+                });
+                console.log(visitedNum);
+                console.log(visit1-visitedNum);
+                $(".visit1").html(visit1-visitedNum);
+                percent=visitedNum+"/"+totalNum;
+                visitList.percent=percent;
+                visitList.shipmentCode=shipmentCode;
+                if(sessionStorage.getItem("visitPercentList")!=null){
+                    visitPercentList=JSON.parse(sessionStorage.getItem("visitPercentList"));
+                    visitPercentList.push(visitList);
+                }
+                sessionStorage.setItem("visitPercentList",JSON.stringify(visitPercentList));
+            },
+            error:function () {
+                diolog_msg("网络不可用");
+            }
+        });
+
+    }
+    loadData(shipmentCode);
+//    loadData(shipmentCode);
+
+    function getLastDeliveryDate(lastDeliveryDate){
+        var time="";
+        if(lastDeliveryDate==""||lastDeliveryDate==undefined){
+            time="";
+            return time;
+        }else {
+            time=lastDeliveryDate.slice(0,4)+'-'+lastDeliveryDate.slice(4,6)+'-'+lastDeliveryDate.slice(6,8);
+            return time;
+        }
+    }
+    function getDamageFlag(damageFlag) {
+        var imageHtml="";
+        if(damageFlag==0){
+            imageHtml="";
+            return imageHtml;
+        }else if(damageFlag==1){
+            imageHtml='<img class="img-responsive" src="images/icon_fault.png" alt="">';
+            return imageHtml;
+        }
+    }
+    function getOosFlag(oosFlag) {
+        var imageHtml="";
+        if(oosFlag==0){
+            imageHtml='<img class="img-responsive" src="images/icon_nor_inventory.png" alt="">';
+            return imageHtml;
+        }else if(oosFlag==1){
+            imageHtml='<img class="img-responsive" src="images/icon_quehuo.png" alt="">';
+            return imageHtml;
+        }else if(oosFlag==2){
+            imageHtml='<img class="img-responsive" src="images/icon_ser_quehuo.png" alt="">';
+            return imageHtml;
+        }
+    }
+    function getColvFlag(colvFlag) {
+        var imageHtml="";
+        if(colvFlag==1){
+            imageHtml='<img class="img-responsive" src="images/icon_colv.png" alt="">';
+            return imageHtml;
+        }else if(colvFlag==0){
+            imageHtml="";
+            return imageHtml;
+        }
+    }
+    function getrefillFlag(fillFlag){
+        if(fillFlag==1){
+           return "\nactive1"
+        }else if(fillFlag==0){
+            return "";
+        }
+    }
+    $('.circle_red').click(function () {
+        var customerList1=[];
+        var customerItem={};
+        $("li").each(function(){
+            console.log($(this));
+            var outletName=$(this).find(".outletName").html();
+            var outletAddress=$(this).find(".outletAddress").html();
+            var outletChannel=$(this).find(".outletChannel").html();
+            var outletNo=$(this).find(".outletNo").html();
+            customerItem={
+                "outletName":outletName,
+                "outletAddress":outletAddress,
+                "outletChannel":outletChannel,
+                "outletNo":outletNo
+            };
+            customerList1.push(customerItem);
+            localstorage.setItem("customerList1",JSON.stringify(customerList1));
+            console.log(localstorage.getItem("customerList1"));
+
+        });
+        window.location.href="add_customer.html";
+    });
+
+
+</script>
+</body>
+</html>

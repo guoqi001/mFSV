@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+    <title>添加产品</title>
+    <link rel="stylesheet" href="css/bootstrap.css">
+    <!--[if lt IE 9]>
+    <script src="js/html5shiv.min.js"></script>
+    <script src="js/respond.min.js"></script>
+    <![endif]-->
+    <style>
+        body{
+            background: #F4F4F4;
+            background-size: cover;
+            font-family: 'Microsoft Yahei';
+        }
+        header{
+            background: #fff;
+            border-bottom:1px solid #c2c2c2;
+            -webkit-box-shadow:0 0.1rem 0.4rem #c2c2c2;
+            -moz-box-shadow:0 0.1rem 0.4rem #c2c2c2;
+            box-shadow:0 0.1rem 0.4rem #c2c2c2;
+        }
+        header .col-xs-6 span{
+            color:#000;
+            font-size:150%;
+            display:inline-block;
+            margin-top:8%;
+        }
+        header .col-xs-3 img{
+            width:4rem;
+            height:auto;
+        }
+        section .container>.row{
+            margin:3% 1%;
+        }
+        input{
+            border:0;
+            outline:0;
+        }
+        .container>.row .search_box{
+            width:100%;
+            height:4rem;
+            background: #fff;
+            -webkit-border-radius:4rem;
+            -moz-border-radius:4rem;
+            border-radius: .4rem;
+            font-size: 1.6rem;
+        }
+        .container>.row .search_box input{
+            display:inline-block;
+            height:4rem;
+            font-size:1.6rem;
+            color:#aaa;
+        }
+        #footer{
+            background: #fff;
+            width:100%;
+            padding:3%;
+        }
+        #footer  .text-right input{
+            color:#fff;
+            background: #E20D0D;
+            width:80%;
+            height:40%;
+            border:0;
+            border-radius: .4rem;
+            font-size:130%;
+        }
+        section{
+            margin-top: 16%;
+        }
+        .mask_layer{
+            width:100%;
+            height:100%;
+            position:relative;
+            top:0;
+            left:0;
+            z-index:1000;
+            opacity:0;
+            display:none;
+            /*filter:alpha(opacity=0);*/
+        }
+    </style>
+</head>
+<body>
+<header class="navbar navbar-fixed-top">
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-3 ">
+                <a href="create_load.html" ><img src="images/arrow.jpg" alt="" class="img-responsive"></a>
+            </div>
+            <div class="col-xs-6 text-center">
+                <span>添加产品</span>
+            </div>
+        </div>
+    </div>
+</header>
+<section>
+    <div class="mask_layer"></div>
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-12 search_box">
+                <span class="form-control-feedback2">产品编号</span>
+                <input type="text" class="search_prod " maxlength="4" name="search_box" placeholder="请输入产品搜索" onkeyup="this.value=this.value.replace(/\D/g,'')">
+            </div>
+        </div>
+    </div>
+</section>
+<div class="navbar navbar-fixed-bottom" id="footer" >
+    <div class="row">
+        <div class="col-xs-6 col-xs-offset-6 text-right">
+            <input type="button" value="确认添加" class="btn text-center add_product">
+        </div>
+    </div>
+</div>
+
+<script src="js/jquery-1.11.3.js"></script>
+<script src="js/bootstrap.js"></script>
+<script>
+    var articleList=[];
+    var localstorage=window.localStorage;
+    var token=localstorage.getItem("token");
+    console.log(token);
+    //所有产品
+        $.ajax({
+            url:"order/getAllProducts",
+            type:"get",
+            async:false,
+            dataType:"json",
+            data:{"token":token},
+            beforeSend: function (XMLHttpRequest) {
+                XMLHttpRequest.setRequestHeader("X-Access-Token", token);
+            },
+            success:function(data){
+                console.log(data);
+                if(data.status==200){
+                    articleList=data.articleList;
+                    console.log(articleList);
+                }
+                else{
+                    diolog_msg("网络不可用");
+                }
+            },
+            err:function(data){
+                diolog_msg("网络不可用");
+            }
+        });
+    //点击添加
+    $(function(){
+        $(".add_product").click(function(){
+            var flag=true;
+            var article={};
+            var articleNo=$('.search_prod').val();
+
+            //将添加的产品放入数组，每次再添加遍历一下，检查是否重复
+            var orderItemList1=[];
+            if(localstorage.getItem("orderItemList1")!=null){
+                orderItemList1=JSON.parse(localstorage.getItem("orderItemList1"));
+                console.log(orderItemList1);
+                for(var k=0;k<orderItemList1.length;k++){
+                    if(orderItemList1[k].articleNo==articleNo){
+                        diolog_msg("已添加");
+                        $('.search_prod').val("").focus();
+                        flag=false;
+                    }
+                }
+            };
+            if(flag){
+                var flag1=false;
+                console.log(articleNo);
+                for(var i=0;i<articleList.length;i++){
+                    if(articleNo==articleList[i].articleNo){
+                        flag1=true;
+                        article.articleNo=articleList[i].articleNo;
+                        console.log(article.articleNo);
+                        article.articleName=articleList[i].articleName;
+                        console.log(article.articleName);
+                        localstorage.setItem("article",JSON.stringify(article));
+                        diolog_msg("添加成功");
+                        window.location.href="create_load.html";
+                    }
+                }
+                if(flag1==false){
+                    diolog_msg("请输入正确的产品编号");
+                    $('.search_prod').val("");
+                }
+            }
+            console.log(localstorage.getItem("article"));
+        });
+    });
+</script>
+</body>
+</html>
